@@ -1,7 +1,7 @@
-@import url('./components/background.css');
-@import url('./components/normalize.css');
-@import url('./components/header.css');
-@import url('./components/footer.css');
+@import url('./components/background.css') ;
+@import url('./components/normalize.css') ;
+@import url('./components/header.css') ;
+@import url('./components/footer.css') ;
 
 
 main {
