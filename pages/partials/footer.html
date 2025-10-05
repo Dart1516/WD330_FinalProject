@@ -1,3 +1,8 @@
- 
-      <p> &copy;2025 ⛺ SleepOutside ⛺ WDD 330 ⛺ BYU-Idaho for BYU-Pathway
-    Worldwide Online </p>
+<!-- partials/footer.html -->
+<footer id="site-footer">
+  <p>© <span id="year"></span> Sitio de Héroes — Hecho con ♥</p>
+</footer>
+<script>
+  // Small inline to keep year in static hosting
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>

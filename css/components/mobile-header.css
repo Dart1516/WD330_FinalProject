@@ -1,0 +1,276 @@
+ /* =========================================================
+   MOBILE MENU PANEL (≤900px)
+   ========================================================= */
+ @media (max-width: 900px) {
+
+     /* -------------------------------------------------------
+     Utils
+     ------------------------------------------------------- */
+     /* Stacking: header always in front */
+     #site-header {
+         position: relative;
+         z-index: 100;
+         /* header over main */
+     }
+
+     .header-container {
+         z-index: 100;
+     }
+
+     main {
+         z-index: 1;
+     }
+
+     body:has(#site-header.open) {
+         overflow: hidden;
+     }
+
+     /* -------------------------------------------------------
+     1) Vars
+     ------------------------------------------------------- */
+     :root {
+         --mobile-header-h: 56px;
+     }
+
+     /* -------------------------------------------------------
+     2) Top bar
+     ------------------------------------------------------- */
+     .header-container {
+         background: linear-gradient(90deg, #0b0e3a 0%, #10145a 50%, #0b0e3a 100%);
+         height: var(--mobile-header-h);
+         left: 0;
+         position: fixed !important;
+         right: 0;
+         top: 0;
+     }
+
+     header {
+         margin: 0 !important;
+         padding-top: var(--mobile-header-h) !important;
+     }
+
+     /* -------------------------------------------------------
+     3) Burger button
+     ------------------------------------------------------- */
+     .menu-toggle {
+         background: transparent;
+         border: none;
+         cursor: pointer;
+         display: inline-flex !important;
+         left: .5rem;
+         position: absolute;
+         top: 50%;
+         transform: translateY(-50%);
+     }
+
+     .menu-toggle::after {
+         content: "";
+         inset: -18px;
+         /* expand hit area */
+         position: absolute;
+     }
+
+     .menu-icon {
+         background: #e9efff;
+         height: 2px;
+         position: relative;
+         width: 20px;
+     }
+
+     .menu-icon::before,
+     .menu-icon::after {
+         background: #e9efff;
+         content: "";
+         height: 2px;
+         left: 0;
+         position: absolute;
+         transition: transform .3s ease;
+         width: 20px;
+     }
+
+     .menu-icon::before {
+         top: -6px;
+     }
+
+     .menu-icon::after {
+         top: 6px;
+     }
+
+     #site-header.open .menu-icon {
+         background: transparent;
+     }
+
+     #site-header.open .menu-icon::before {
+         transform: rotate(45deg) translate(4px, 4px);
+     }
+
+     #site-header.open .menu-icon::after {
+         transform: rotate(-45deg) translate(4px, -4px);
+     }
+
+     /* -------------------------------------------------------
+     4) Brand centered
+     ------------------------------------------------------- */
+     .brand {
+         flex: 1;
+         /* span the bar width */
+         position: relative;
+         /* anchor for absolute children */
+     }
+
+     .brand .logo {
+         display: block;
+         left: 50%;
+         position: absolute;
+         top: 50%;
+         transform: translate(-50%, -50%);
+     }
+
+     .header-actions {
+         position: absolute;
+         right: .6rem;
+         top: 50%;
+         transform: translateY(-50%);
+     }
+
+     /* -------------------------------------------------------
+     5) Actions
+     ------------------------------------------------------- */
+     .header-container .header-actions .external-link {
+         display: none !important;
+         /* hide header CTA on mobile */
+     }
+
+     #site-header.open .header-actions .login-icon {
+         display: inline-flex !important;
+         /* keep login visible */
+     }
+
+     /* -------------------------------------------------------
+     6) Menu panel
+     ------------------------------------------------------- */
+     .nav {
+         background: linear-gradient(90deg, #0b0e3a 0%, #10145a 50%, #0b0e3a 100%);
+         border-bottom-left-radius: 12px;
+         border-bottom-right-radius: 12px;
+         box-shadow: 0 12px 24px rgba(0, 0, 0, .35);
+         left: 0 !important;
+         opacity: 0;
+         padding: 16px 20px 18px;
+         pointer-events: none;
+         position: absolute !important;
+         right: 0 !important;
+         top: var(--mobile-header-h) !important;
+         transform: translateY(-8px);
+         transition:
+             opacity .25s ease,
+             transform .25s ease,
+             visibility 0s linear .25s;
+         visibility: hidden;
+         z-index: 110;
+         /* panel above header content */
+     }
+
+     #site-header.open .nav {
+         opacity: 1;
+         pointer-events: auto;
+         transform: translateY(0);
+         transition:
+             opacity .25s ease,
+             transform .25s ease,
+             visibility 0s;
+         visibility: visible;
+         /* visible immediately on open */
+     }
+
+     /* -------------------------------------------------------
+     7) Menu list
+     ------------------------------------------------------- */
+     .nav ul {
+         align-items: center !important;
+         display: flex !important;
+         flex-direction: column !important;
+         gap: 12px !important;
+         justify-content: flex-start !important;
+         list-style: none;
+         margin: 0;
+         margin-inline: auto;
+         padding: 0;
+         width: 100%;
+     }
+
+     .nav li {
+         display: flex;
+         justify-content: center;
+         width: 100%;
+     }
+
+     .nav a {
+         -webkit-tap-highlight-color: transparent;
+         align-items: center;
+         /* vertical center */
+         border-radius: 10px;
+         display: flex;
+         font-size: 1.1rem;
+         font-weight: 700;
+         justify-content: center;
+         line-height: 1.25;
+         min-height: 44px;
+         /* touch target */
+         padding: 12px 16px;
+         /* hit area */
+         text-align: left;
+         transition: background-color .2s ease, color .2s ease;
+         width: min(560px, 100%);
+     }
+
+     .nav a:hover,
+     .nav a:focus-visible {
+         background: rgba(102, 196, 255, 0.14);
+         /* hover bg */
+         color: #e9efff;
+     }
+
+     .nav a:active {
+         background: rgba(102, 196, 255, 0.24);
+         /* tap feedback */
+     }
+
+     /* -------------------------------------------------------
+     8) CTA item
+     ------------------------------------------------------- */
+     .nav li.cta {
+         display: flex !important;
+         margin-top: 10px;
+         width: 100%;
+     }
+
+     .nav li.cta .external-link {
+         border-radius: 10px !important;
+         display: flex !important;
+         justify-content: center;
+         max-width: 560px;
+         padding: 14px 20px !important;
+         text-align: center !important;
+         width: 100% !important;
+     }
+
+     /* -------------------------------------------------------
+     9) Current link (overlay)
+     ------------------------------------------------------- */
+     .nav a[aria-current="page"] {
+         background: rgba(102, 196, 255, 0.14);
+         box-shadow: inset 0 0 0 2px rgba(102, 196, 255, 0.25);
+         color: #e9efff;
+     }
+
+     .nav a[aria-current="page"]:hover,
+     .nav a[aria-current="page"]:focus-visible {
+         background: rgba(102, 196, 255, 0.18);
+     }
+
+     /* Disable the thin underline in mobile */
+     #site-header.open .nav a[aria-current="page"]::after {
+         content: none;
+     }
+ }
