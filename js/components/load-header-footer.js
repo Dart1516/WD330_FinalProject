@@ -10,42 +10,60 @@ async function fetchPartial(url) {
 }
 
 /**
- * Normalize path for comparison (e.g., "/" == "/index.html").
+ * Key extractor: compare by filename ("index.html", "heroes-list.html", etc.).
+ * This tolerates "/", "/index.html", y subcarpetas.
  */
-function normalizePath(pathname) {
-    if (!pathname || pathname === "/") return "/index.html";
-    // Remove trailing slash
-    const clean = pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
-    // Map "/pages" to "/pages/index.html" if needed (optional)
-    return clean.toLowerCase();
+function pathKey(pathname) {
+    if (!pathname || pathname === "/") return "index.html";
+    const clean = pathname.replace(/\/+$/, "");          // quita slash final
+    const last = clean.split("/").pop();                 // último segmento
+    return (last && last.length) ? last.toLowerCase() : "index.html";
 }
 
 /**
  * Set active nav link based on current location.
  */
 function setActiveNavLink(headerRoot) {
-    const current = normalizePath(window.location.pathname);
-    const links = headerRoot.querySelectorAll('nav a[href^="/"]');
+    const currentKey = pathKey(window.location.pathname);
 
-    // Clear previous states
-    links.forEach(a => {
-        a.removeAttribute("aria-current");
-        a.classList.remove("is-active");
+    // SOLO links del menú principal (no el logo)
+    const navLinks = headerRoot.querySelectorAll('#main-nav a[href^="/"]:not([target="_blank"])');
+    // Links internos en el área de acciones (p.ej., /pages/login.html)
+    const actionLinks = headerRoot.querySelectorAll('.header-actions a[href^="/"]:not([target="_blank"])');
+
+    const all = [...navLinks, ...actionLinks];
+
+    // Reset
+    all.forEach(a => {
+        a.removeAttribute('aria-current');
+        a.classList.remove('is-active');
     });
 
-    // Try exact match first
-    let best = Array.from(links).find(a => normalizePath(new URL(a.href).pathname) === current);
+    // 1) Intentar en el menú primero (para que no gane el logo)
+    let best = Array.from(navLinks).find(a => {
+        const hrefKey = pathKey(new URL(a.href, window.location.origin).pathname);
+        return hrefKey === currentKey;
+    });
 
-    // Fallback: treat "/" as "/index.html"
-    if (!best && current === "/index.html") {
-        best = Array.from(links).find(a => new URL(a.href).pathname === "/");
+    // 2) Si no hubo match en el menú, intentar en el área de acciones
+    if (!best) {
+        best = Array.from(actionLinks).find(a => {
+            const hrefKey = pathKey(new URL(a.href, window.location.origin).pathname);
+            return hrefKey === currentKey;
+        });
+    }
+
+    // 3) Fallback adicional para la home
+    if (!best && currentKey === 'index.html') {
+        best = Array.from(navLinks).find(a => new URL(a.href, window.location.origin).pathname === '/');
     }
 
     if (best) {
-        best.setAttribute("aria-current", "page");
-        best.classList.add("is-active");
+        best.setAttribute('aria-current', 'page');
+        best.classList.add('is-active');
     }
 }
+
 
 /**
  * Inject header and footer partials into #site-header / #site-footer.

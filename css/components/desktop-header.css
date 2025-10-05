@@ -65,10 +65,10 @@
      transition: color .3s ease, border-color .3s ease;
  }
 
- .nav a:hover,
- .nav a:focus {
-     color: #66c4ff;
- }
+  .nav a:hover,
+  .nav a:focus-visible {
+      color: #66c4ff;
+  }
 
  /* Current page underline */
  .nav a[aria-current="page"]::after {
@@ -133,4 +133,25 @@
  /* Desactiva animaciones cuando el JS ponga la clase de guardia */
  #site-header.no-anim .nav {
      transition: none !important;
+ }
+ /* Make room for underline on the right link */
+ .header-actions .login-icon {
+     position: relative;
+ }
+
+ /* Same underline style when current page is Cuenta */
+ .header-actions .login-icon[aria-current="page"]::after {
+     content: "";
+     position: absolute;
+     left: 0;
+     right: 0;
+     bottom: -4px;
+     height: 2px;
+     background: #66c4ff;
+     border-radius: 2px;
+ }
+
+ /* Optional: tint the text to match hover/active */
+ .header-actions .login-icon[aria-current="page"] {
+     color: #66c4ff;
  }
