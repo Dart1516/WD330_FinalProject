@@ -1,61 +1,90 @@
-// js/components/load-header-footer.js
 
-/**
- * Fetch a partial and return text (throws on non-OK).
- */
-async function fetchPartial(url) {
-    const res = await fetch(url, { cache: "no-cache" }); // dev-friendly
+/* ------------------------------ REPO BASE PATH ----------------------------- */
+
+// If we are on GitHub Pages, prefix paths with "/<repo>"
+const REPO_BASE = location.hostname.endsWith('github.io')
+    ? `/${location.pathname.split('/')[1] || ''}`  // e.g. "/WD330_FinalProject"
+    : '';                                          // local: empty
+
+/* ------------------------------- PATH HELPERS ------------------------------ */
+
+// Ensure a root path like "/foo/bar". Strip repo base if already present.
+function toRootPath(path) {
+    if (!path) return '/';
+    const p = path.startsWith('/') ? path : `/${path}`;
+    return (REPO_BASE && p.startsWith(REPO_BASE + '/')) ? p.slice(REPO_BASE.length) : p;
+}
+
+// Build a URL that works both locally and on GitHub Pages
+function fromRoot(path) {
+    return `${REPO_BASE}${toRootPath(path)}`;
+}
+
+// Normalize a pathname for comparing pages (ignore repo folder)
+function pathKey(pathname) {
+    let p = pathname || '/';
+    if (REPO_BASE && p.startsWith(REPO_BASE)) p = p.slice(REPO_BASE.length) || '/';
+    if (p === '/' || p === '') return 'index.html';
+    const clean = p.replace(/\/+$/, '');
+    const last = clean.split('/').pop();
+    return last ? last.toLowerCase() : 'index.html';
+}
+
+/* ------------------------------- FETCH HELPERS ---------------------------- */
+
+// Fetch a partial and return its HTML (throws on non-OK)
+async function fetchPartial(rootPath) {
+    const url = fromRoot(rootPath);
+    const res = await fetch(url, { cache: 'no-cache' }); // dev-friendly
     if (!res.ok) throw new Error(`Failed to load: ${url}`);
     return res.text();
 }
 
-/**
- * Key extractor: compare by filename ("index.html", "heroes-list.html", etc.).
- * This tolerates "/", "/index.html", y subcarpetas.
- */
-function pathKey(pathname) {
-    if (!pathname || pathname === "/") return "index.html";
-    const clean = pathname.replace(/\/+$/, "");          // quita slash final
-    const last = clean.split("/").pop();                 // último segmento
-    return (last && last.length) ? last.toLowerCase() : "index.html";
+/* -------------------------------- DOM HELPERS ----------------------------- */
+
+// Prefix internal links with REPO_BASE on GitHub Pages (avoid broken nav)
+function fixInternalLinks(root) {
+    if (!root) return;
+    const anchors = root.querySelectorAll('a[href^="/"]');
+    anchors.forEach(a => {
+        const raw = a.getAttribute('href');                // original string
+        const needsPrefix = !(REPO_BASE && raw.startsWith(REPO_BASE + '/'));
+        if (needsPrefix) a.setAttribute('href', fromRoot(raw));
+    });
 }
 
-/**
- * Set active nav link based on current location.
- */
+// Mark current page in the header (adds aria-current + .is-active)
 function setActiveNavLink(headerRoot) {
+    if (!headerRoot) return;
+
     const currentKey = pathKey(window.location.pathname);
 
-    // SOLO links del menú principal (no el logo)
-    const navLinks = headerRoot.querySelectorAll('#main-nav a[href^="/"]:not([target="_blank"])');
-    // Links internos en el área de acciones (p.ej., /pages/login.html)
-    const actionLinks = headerRoot.querySelectorAll('.header-actions a[href^="/"]:not([target="_blank"])');
-
+    const navLinks = headerRoot.querySelectorAll('#main-nav a[href]');
+    const actionLinks = headerRoot.querySelectorAll('.header-actions a[href]');
     const all = [...navLinks, ...actionLinks];
 
-    // Reset
+    // Reset state
     all.forEach(a => {
         a.removeAttribute('aria-current');
         a.classList.remove('is-active');
     });
 
-    // 1) Intentar en el menú primero (para que no gane el logo)
-    let best = Array.from(navLinks).find(a => {
-        const hrefKey = pathKey(new URL(a.href, window.location.origin).pathname);
-        return hrefKey === currentKey;
-    });
+    // Match by filename (index.html, heroes.html, etc.)
+    const matchesCurrent = el => {
+        const href = el.getAttribute('href');
+        const hrefPath = new URL(href, window.location.origin).pathname;
+        return pathKey(hrefPath) === currentKey;
+    };
 
-    // 2) Si no hubo match en el menú, intentar en el área de acciones
-    if (!best) {
-        best = Array.from(actionLinks).find(a => {
-            const hrefKey = pathKey(new URL(a.href, window.location.origin).pathname);
-            return hrefKey === currentKey;
-        });
-    }
+    let best = Array.from(navLinks).find(matchesCurrent)
+        || Array.from(actionLinks).find(matchesCurrent);
 
-    // 3) Fallback adicional para la home
+    // Extra fallback for home ("/")
     if (!best && currentKey === 'index.html') {
-        best = Array.from(navLinks).find(a => new URL(a.href, window.location.origin).pathname === '/');
+        best = Array.from(navLinks).find(a => {
+            const p = new URL(a.getAttribute('href'), window.location.origin).pathname;
+            return pathKey(p) === 'index.html';
+        });
     }
 
     if (best) {
@@ -64,32 +93,31 @@ function setActiveNavLink(headerRoot) {
     }
 }
 
+/* --------------------------------- PUBLIC API ----------------------------- */
 
-/**
- * Inject header and footer partials into #site-header / #site-footer.
- * Returns the header element (useful to init UI after injection).
- */
 export async function injectPartials({
-    headerSel = "#site-header",
-    footerSel = "#site-footer",
-    headerURL = "pages/partials/header.html",
-    footerURL = "pages/partials/footer.html",
+    headerSel = '#site-header',
+    footerSel = '#site-footer',
+    // Always pass root-relative paths here (with or without leading "/")
+    headerURL = '/pages/partials/header.html',
+    footerURL = '/pages/partials/footer.html',
 } = {}) {
-    // 1) Load partials in parallel
+    // 1) Load both partials in parallel
     const [headerHTML, footerHTML] = await Promise.all([
         fetchPartial(headerURL),
         fetchPartial(footerURL),
     ]);
 
-    // 2) Inject into DOM
+    // 2) Replace mount points with fetched HTML
     const headerMount = document.querySelector(headerSel);
     const footerMount = document.querySelector(footerSel);
-    if (headerMount) headerMount.outerHTML = headerHTML; // replace to keep structure
+    if (headerMount) headerMount.outerHTML = headerHTML;
     if (footerMount) footerMount.outerHTML = footerHTML;
 
-    // 3) After injection, select the new header root
-    const headerRoot = document.querySelector("header#site-header");
-    if (headerRoot) setActiveNavLink(headerRoot);
+    // 3) After injection: normalize links and set active state
+    const headerRoot = document.querySelector('header#site-header');
+    fixInternalLinks(headerRoot);
+    setActiveNavLink(headerRoot);
 
     return headerRoot;
 }

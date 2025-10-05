@@ -1,8 +1,67 @@
-<!-- partials/footer.html -->
-<footer id="site-footer">
-  <p>© <span id="year"></span> Sitio de Héroes — Hecho con ♥</p>
+<footer id="site-footer" class="footer" role="contentinfo" aria-label="Sitio – enlaces útiles">
+  <div class="footer__container">
+    <div class="footer__brand">
+      <a class="footer__logo" href="/" aria-label="Ir al inicio">HN</a>
+      <p class="footer__tagline">Recursos de Heroes of the Storm en español</p>
+    </div>
+
+    <nav class="footer__grid" aria-label="Navegación del footer">
+      <!-- Recursos y guías -->
+      <section class="footer__col" aria-labelledby="ft-recursos">
+        <h3 id="ft-recursos" class="footer__title">Recursos y guías</h3>
+        <ul class="footer__list">
+          <li><a href="https://www.heroesfire.com/" target="_blank" rel="noopener noreferrer">HeroesFire</a></li>
+          <li><a href="https://psionic-storm.com/es/" target="_blank" rel="noopener noreferrer">Psionic Storm</a></li>
+          <li><a href="https://www.icy-veins.com/heroes/" target="_blank" rel="noopener noreferrer">Icy Veins</a></li>
+          <li><a href="https://www.hotsnerd.com/" target="_blank" rel="noopener noreferrer">HotsNerd</a></li>
+          <li><a href="https://nexuscompendium.com/resources" target="_blank" rel="noopener noreferrer">The Nexus
+              Compendium</a></li>
+          <li><a href="https://heroesofthestorm.fandom.com/wiki/Heroes_of_the_Storm_Wiki" target="_blank"
+              rel="noopener noreferrer">Heroes Wiki</a></li>
+        </ul>
+      </section>
+
+      <!-- Herramientas & Stats -->
+      <section class="footer__col" aria-labelledby="ft-tools">
+        <h3 id="ft-tools" class="footer__title">Herramientas &amp; stats</h3>
+        <ul class="footer__list">
+          <li><a href="https://www.heroesprofile.com/" target="_blank" rel="noopener noreferrer">Heroes Profile</a></li>
+          <li><a href="https://api.heroesprofile.com/Api" target="_blank" rel="noopener noreferrer">Heroes Profile
+              API</a></li>
+          <li><a href="https://sullygnome.com/game/Heroes_of_the_Storm" target="_blank"
+              rel="noopener noreferrer">SullyGnome (Twitch stats)</a></li>
+          <li><a href="https://heroespatchnotes.com/" target="_blank" rel="noopener noreferrer">Heroes Patch Notes
+              (histórico)</a></li>
+        </ul>
+      </section>
+
+      <!-- Oficiales & Comunidad -->
+      <section class="footer__col" aria-labelledby="ft-comunidad">
+        <h3 id="ft-comunidad" class="footer__title">Oficiales &amp; comunidad</h3>
+        <ul class="footer__list">
+          <li><a href="https://www.youtube.com/blizzheroes" target="_blank" rel="noopener noreferrer">YouTube oficial
+              (EN)</a></li>
+          <li><a href="https://www.youtube.com/@BlizzHeroesBrasil" target="_blank" rel="noopener noreferrer">YouTube
+              Brasil</a></li>
+          <li><a href="https://www.youtube.com/@BlizzHeroesLATAM" target="_blank" rel="noopener noreferrer">YouTube
+              LATAM</a></li>
+          <li><a href="https://facebook.com/BlizzHeroesBrasil" target="_blank" rel="noopener noreferrer">Facebook
+              Brasil</a></li>
+          <li><a href="https://www.facebook.com/groups/HeoresOfTheStormLatinoamerica" target="_blank"
+              rel="noopener noreferrer">Grupo Facebook LATAM #1</a></li>
+          <li><a href="https://www.facebook.com/groups/HeroesOfStormLatino" target="_blank"
+              rel="noopener noreferrer">Grupo Facebook LATAM #2</a></li>
+          <li><a href="https://www.twitch.tv/directory/category/heroes-of-the-storm?lang=es" target="_blank"
+              rel="noopener noreferrer">Twitch – categoría HotS</a></li>
+        </ul>
+      </section>
+    </nav>
+
+    <div class="footer__bottom">
+      <a class="footer__to-top" href="#site-header">Volver arriba ↑</a>
+      <p class="footer__legal">
+        © <span>2015–2025</span> HN — Proyecto fan. No afiliado a Blizzard Entertainment.
+      </p>
+    </div>
+  </div>
 </footer>
-<script>
-  // Small inline to keep year in static hosting
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
