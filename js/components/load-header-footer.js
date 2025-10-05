@@ -72,8 +72,8 @@ function setActiveNavLink(headerRoot) {
 export async function injectPartials({
     headerSel = "#site-header",
     footerSel = "#site-footer",
-    headerURL = "/pages/partials/header.html",
-    footerURL = "/pages/partials/footer.html",
+    headerURL = "pages/partials/header.html",
+    footerURL = "pages/partials/footer.html",
 } = {}) {
     // 1) Load partials in parallel
     const [headerHTML, footerHTML] = await Promise.all([
