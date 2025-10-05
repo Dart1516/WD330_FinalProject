@@ -1,14 +1,18 @@
+// js/components/load-header-footer.js
+// Load header/footer partials with GitHub Pages support.
+// - Works on localhost and on <user>.github.io/<repo>
+// - Fixes internal links and asset paths inside the injected header
+// - Highlights the current nav item
 
 /* ------------------------------ REPO BASE PATH ----------------------------- */
 
-// If we are on GitHub Pages, prefix paths with "/<repo>"
 const REPO_BASE = location.hostname.endsWith('github.io')
     ? `/${location.pathname.split('/')[1] || ''}`  // e.g. "/WD330_FinalProject"
     : '';                                          // local: empty
 
 /* ------------------------------- PATH HELPERS ------------------------------ */
 
-// Ensure a root path like "/foo/bar". Strip repo base if already present.
+// Normalize to root path ("/foo/bar"), removing duplicated "/<repo>" if present
 function toRootPath(path) {
     if (!path) return '/';
     const p = path.startsWith('/') ? path : `/${path}`;
@@ -20,7 +24,7 @@ function fromRoot(path) {
     return `${REPO_BASE}${toRootPath(path)}`;
 }
 
-// Normalize a pathname for comparing pages (ignore repo folder)
+// Key to compare pages by filename ("index.html", "cuenta.html", etc.)
 function pathKey(pathname) {
     let p = pathname || '/';
     if (REPO_BASE && p.startsWith(REPO_BASE)) p = p.slice(REPO_BASE.length) || '/';
@@ -30,9 +34,9 @@ function pathKey(pathname) {
     return last ? last.toLowerCase() : 'index.html';
 }
 
-/* ------------------------------- FETCH HELPERS ---------------------------- */
+/* ------------------------------- FETCH HELPERS ----------------------------- */
 
-// Fetch a partial and return its HTML (throws on non-OK)
+// Fetch a partial and return HTML text (throws on non-OK)
 async function fetchPartial(rootPath) {
     const url = fromRoot(rootPath);
     const res = await fetch(url, { cache: 'no-cache' }); // dev-friendly
@@ -40,25 +44,62 @@ async function fetchPartial(rootPath) {
     return res.text();
 }
 
-/* -------------------------------- DOM HELPERS ----------------------------- */
+/* -------------------------------- DOM HELPERS ------------------------------ */
 
-// Prefix internal links with REPO_BASE on GitHub Pages (avoid broken nav)
+// Prefix internal links with REPO_BASE on GitHub Pages
 function fixInternalLinks(root) {
-    if (!root) return;
-    const anchors = root.querySelectorAll('a[href^="/"]');
+    if (!root || !REPO_BASE) return;
+    const anchors = root.querySelectorAll('a[href^="/"]:not([target="_blank"])');
     anchors.forEach(a => {
-        const raw = a.getAttribute('href');                // original string
-        const needsPrefix = !(REPO_BASE && raw.startsWith(REPO_BASE + '/'));
-        if (needsPrefix) a.setAttribute('href', fromRoot(raw));
+        const raw = a.getAttribute('href');
+        if (raw && !raw.startsWith(REPO_BASE + '/')) {
+            a.setAttribute('href', fromRoot(raw));
+        }
     });
 }
 
-// Mark current page in the header (adds aria-current + .is-active)
+// Prefix root-relative asset paths (img/src, srcset, svg/use href)
+function fixAssetPaths(root) {
+    if (!root || !REPO_BASE) return;
+
+    const prefix = (val) =>
+        (val && val.startsWith('/') && !val.startsWith(REPO_BASE + '/')) ? fromRoot(val) : val;
+
+    // <img src>
+    root.querySelectorAll('img[src]').forEach(img => {
+        const raw = img.getAttribute('src');
+        const next = prefix(raw);
+        if (next !== raw) img.setAttribute('src', next);
+    });
+
+    // <img srcset> and <source srcset>
+    root.querySelectorAll('img[srcset], source[srcset]').forEach(el => {
+        const raw = el.getAttribute('srcset');
+        if (!raw) return;
+        const fixed = raw.split(',').map(part => {
+            const [url, size] = part.trim().split(/\s+/, 2);
+            const newUrl = prefix(url);
+            return size ? `${newUrl} ${size}` : newUrl;
+        }).join(', ');
+        if (fixed !== raw) el.setAttribute('srcset', fixed);
+    });
+
+    // SVG: <use href="..."> and legacy xlink:href
+    root.querySelectorAll('use[href], use[xlink\\:href]').forEach(use => {
+        const cur = use.getAttribute('href') || use.getAttribute('xlink:href');
+        const next = prefix(cur);
+        if (next !== cur) {
+            if (use.hasAttribute('href')) use.setAttribute('href', next);
+            if (use.hasAttribute('xlink:href')) use.setAttribute('xlink:href', next);
+        }
+    });
+}
+
+// Highlight current page in the header (adds aria-current + .is-active)
 function setActiveNavLink(headerRoot) {
     if (!headerRoot) return;
 
     const currentKey = pathKey(window.location.pathname);
-
     const navLinks = headerRoot.querySelectorAll('#main-nav a[href]');
     const actionLinks = headerRoot.querySelectorAll('.header-actions a[href]');
     const all = [...navLinks, ...actionLinks];
@@ -69,7 +110,7 @@ function setActiveNavLink(headerRoot) {
         a.classList.remove('is-active');
     });
 
-    // Match by filename (index.html, heroes.html, etc.)
+    // Compare by filename
     const matchesCurrent = el => {
         const href = el.getAttribute('href');
         const hrefPath = new URL(href, window.location.origin).pathname;
@@ -79,7 +120,7 @@ function setActiveNavLink(headerRoot) {
     let best = Array.from(navLinks).find(matchesCurrent)
         || Array.from(actionLinks).find(matchesCurrent);
 
-    // Extra fallback for home ("/")
+    // Fallback for home ("/")
     if (!best && currentKey === 'index.html') {
         best = Array.from(navLinks).find(a => {
             const p = new URL(a.getAttribute('href'), window.location.origin).pathname;
@@ -93,14 +134,15 @@ function setActiveNavLink(headerRoot) {
     }
 }
 
-/* --------------------------------- PUBLIC API ----------------------------- */
+/* --------------------------------- PUBLIC API ------------------------------ */
 
 export async function injectPartials({
     headerSel = '#site-header',
     footerSel = '#site-footer',
-    // Always pass root-relative paths here (with or without leading "/")
+    // Use root-relative paths here (with or without leading "/")
     headerURL = '/pages/partials/header.html',
     footerURL = '/pages/partials/footer.html',
+    onHeaderReady = null,  // optional callback after header is injected
 } = {}) {
     // 1) Load both partials in parallel
     const [headerHTML, footerHTML] = await Promise.all([
@@ -114,10 +156,18 @@ export async function injectPartials({
     if (headerMount) headerMount.outerHTML = headerHTML;
     if (footerMount) footerMount.outerHTML = footerHTML;
 
-    // 3) After injection: normalize links and set active state
+    // 3) After injection: normalize links/assets and set active state
     const headerRoot = document.querySelector('header#site-header');
     fixInternalLinks(headerRoot);
+    fixAssetPaths(headerRoot);
     setActiveNavLink(headerRoot);
 
+    if (typeof onHeaderReady === 'function') onHeaderReady(headerRoot);
     return headerRoot;
 }
+
+// (Optional) export internals for testing or reuse
+export const __internal = {
+    REPO_BASE, toRootPath, fromRoot, pathKey,
+    fetchPartial, fixInternalLinks, fixAssetPaths, setActiveNavLink,
+};
