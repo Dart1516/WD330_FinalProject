@@ -1,17 +1,16 @@
-/* Quita márgenes y pone tipografía clara */
 html,
 body {
     height: 100%;
 }
 
+/* background */
 body {
     margin: 0;
     color: #fff;
     background: #0b032d;
-    /* tu color/imagen de fondo base */
 }
 
-/* El lienzo ocupa toda la pantalla y no bloquea clicks */
+/* tje backgorund fills all the screen and no clicks*/
 #stars {
     position: fixed;
     inset: 0;
@@ -21,15 +20,4 @@ body {
     z-index: 0;
 }
 
-/* Tu contenido por encima del lienzo */
-main {
-    position: relative;
-    z-index: 1;
-    max-width: 900px;
-    margin: 12vh auto;
-    padding: 24px 28px;
-    background: rgba(10, 6, 30, .35);
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255, 255, 255, .08);
-    border-radius: 18px;
-}
+ 

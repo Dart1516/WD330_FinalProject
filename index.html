@@ -1,33 +1,59 @@
 <!doctype html>
 <html lang="es">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Home</title>
+    <title>Sitio de Héroes — Inicio</title>
+    <meta name="description" content="Website de Heroes de la Tormenta en español? " />
+    <meta name="author" content="Tu Nombre" />
     <link rel="stylesheet" href="css/base.css" />
-    
-    <script src="js/starsBackground.js" defer></script>
 </head>
 
 <body>
-    <canvas id="stars"></canvas>
-
     
-<!-- Header reusable -->
-<header class="divider" id="main-header">
-    <h1>  this is the <header></header></h1>
+    <canvas id="stars" aria-hidden="true"></canvas>
+
+<header id="site-header">
+    <div class="header-container">
+        <!-- Logo -->
+        <a href="index.html" class="logo">Sitio de Héroes</a>
+
+        <!-- Navegación principal -->
+        <nav id="main-nav" class="nav" aria-label="Navegación principal">
+            <ul>
+                <li><a href="index.html" aria-current="page">Inicio</a></li>
+                <li><a href="pages/heroes-list.html">Héroes</a></li>
+                <li><a href="pages/heroes-details.html">Detalles</a></li>
+                <li><a href="pages/heroes-stats.html">Estadísticas</a></li>
+            </ul>
+        </nav>
+
+        <!-- Enlace externo -->
+        <div class="header-actions">
+            <a href="https://heroesofthestorm.blizzard.com/es-mx/" target="_blank" rel="noopener noreferrer"
+                class="external-link">
+                Sitio Oficial ↗
+            </a>
+            <!-- Espacio futuro para login -->
+            <!-- <a href="pages/login.html" class="btn-login">Iniciar sesión</a> -->
+        </div>
+    </div>
 </header>
- 
 
-<!-- Demo de contenido -->
-<main class="container section">
+    <main id="main-content" tabindex="-1">
+        <h1>Bienvenido</h1>
+        <p>Fondo con estrellas animadas y navegación por héroes.</p>
+        <p><a href="pages/heroes-list.html">Ir a la lista de héroes →</a></p>
+    </main>
+
+
+    <footer id="site-footer"></footer>
+
+    <noscript>Este sitio usa JavaScript para cargar el encabezado y pie de página.</noscript>
+
+
     
-        <h1>Hola, universo ✨</h1>
-        <p>Fondo con estrellas animadas.</p>
-    
-    <footer class="divider" id="main-footer"></footer>
-    <script type="module" src="js/loadHeaderFooter.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 
 </html>
