@@ -2,6 +2,7 @@
 @import url('./components/background.css');
 @import url('./components/header-desktop.css');
 @import url('./components/footer-desktop.css');
+@import url('./variables.css');
 
 
 main {

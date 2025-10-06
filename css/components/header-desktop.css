@@ -1,157 +1,174 @@
- @import url('./header-mobile.css');
+@import url('./header-mobile.css');
+@import url('../variables.css');
 
- /* =========================================================
+/* =========================================================
    1) HEADER WRAPPER
    ========================================================= */
- header {
-     background: linear-gradient(90deg, #0b0e3a 0%, #10145a 50%, #0b0e3a 100%);
-     backdrop-filter: blur(16px);
-     border-radius: 12px;
-     margin: 2.5%;
- }
+/* Desktop header container */
+header {
+  background: var(--background-horizontal-brand-gradient);
+  backdrop-filter: blur(16px);
+  border-radius: var(--border-radius-medium);
+  margin: 2.5%;
+}
 
- /* =========================================================
+/* =========================================================
    2) MAIN CONTAINER
    ========================================================= */
- .header-container {
-     align-items: center;
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-     padding: .6rem 1rem;
- }
+/* Flex row for logo, nav and actions */
+.header-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+}
 
- /* =========================================================
+/* =========================================================
    3) TOGGLES
    ========================================================= */
- .menu-toggle {
-     display: none;
- }
+/* Hide mobile menu button on desktop */
+.menu-toggle {
+  display: none;
+}
 
- /* =========================================================
+/* =========================================================
    4) LOGO
    ========================================================= */
- .logo img {
-     display: block;
-     height: auto;
-     width: 42px;
- }
+/* Constrain logo image */
+.logo img {
+  display: block;
+  height: auto;
+  width: 42px;
+}
 
- /* =========================================================
+/* =========================================================
    5) NAVIGATION
    ========================================================= */
- .nav ul {
-     align-items: center;
-     display: flex;
-     flex-direction: row;
-     gap: 2.5rem;
-     justify-content: center;
-     list-style: none;
-     margin: 0;
-     padding: 0;
- }
+/* Horizontal nav list */
+.nav ul {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
- /* =========================================================
+/* =========================================================
    6) MENU LINKS (URLs)
    ========================================================= */
- .nav a {
-     color: #e9efff;
-     font-size: 1rem;
-     font-weight: 600;
-     letter-spacing: .4px;
-     padding: .4rem 0;
-     position: relative;
-     text-decoration: none;
-     transition: color .3s ease, border-color .3s ease;
- }
+/* Default link styles */
+.nav a {
+  color: var(--color-text-main);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  padding: 0.4rem 0;
+  position: relative;
+  text-decoration: none;
+  transition: var(--transition-link);
+}
 
-  .nav a:hover,
-  .nav a:focus-visible {
-      color: #66c4ff;
-  }
+/* Hover / focus states */
+.nav a:focus-visible,
+.nav a:hover {
+  color: var(--color-accent);
+}
 
- /* Current page underline */
- .nav a[aria-current="page"]::after {
-     background: #66c4ff;
-     border-radius: 2px;
-     bottom: -4px;
-     content: "";
-     height: 2px;
-     left: 0;
-     position: absolute;
-     width: 100%;
- }
+/* Current page underline */
+.nav a[aria-current="page"]::after {
+  background: var(--color-accent);
+  border-radius: 2px;
+  bottom: -4px;
+  content: "";
+  height: 2px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
 
- /* Hide secondary CTA in desktop nav */
- nav ul li.cta {
-     display: none;
- }
+/* Hide secondary CTA in desktop nav */
+nav ul li.cta {
+  display: none;
+}
 
- /* =========================================================
+/* =========================================================
    7) ACTION AREA
    ========================================================= */
- .header-actions {
-     align-items: center;
-     display: flex;
-     gap: 1rem;
- }
+/* Right-side actions container */
+.header-actions {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+}
 
- /* =========================================================
+/* =========================================================
    8) LOGIN ICON
    ========================================================= */
- .login-icon {
-     color: #e9efff;
-     display: inline-flex;
-     line-height: 1;
-     margin-left: .25rem;
-     text-decoration: none;
- }
+/* Account link/icon styles */
+.login-icon {
+  color: var(--color-text-main);
+  display: inline-flex;
+  line-height: 1;
+  margin-left: 0.25rem;
+  position: relative; 
+  text-decoration: none;
+  transition: var(--transition-link);
+}
 
- /* =========================================================
+/* Match current-page underline style when "Cuenta" is active */
+.header-actions .login-icon[aria-current="page"]::after {
+  background: var(--color-accent);
+  border-radius: 2px;
+  bottom: -4px;
+  content: "";
+  height: 2px;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+
+/* Optional: tint icon/text when active */
+.header-actions .login-icon[aria-current="page"] {
+  color: var(--color-accent);
+}
+
+.login-icon:hover{color: var(--color-accent);}
+
+/* =========================================================
    9) EXTERNAL LINK (CTA BUTTON)
    ========================================================= */
- .external-link {
-     background-color: #ff7b00;
-     border-radius: 8px;
-     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-     color: #fff;
-     display: inline-block;
-     font-size: 0.95rem;
-     font-weight: 600;
-     margin: 0;
-     padding: 0.7rem 1.3rem;
-     text-decoration: none;
-     transition: background-color .3s ease, transform .2s ease, box-shadow .2s ease;
- }
+/* Primary CTA button */
+.external-link {
+  background-color: #ff7b00;
+  /* consider a token: --color-cta-primary */
+  border-radius: var(--border-radius-medium);
+  box-shadow: var(--shadow-soft);
+  color: #fff;
+  display: inline-block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0.7rem 1.3rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
 
- .external-link:hover,
- .external-link:focus {
-     background-color: #ff962e;
-     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
-     transform: translateY(-1px);
- }
- /* Desactiva animaciones cuando el JS ponga la clase de guardia */
- #site-header.no-anim .nav {
-     transition: none !important;
- }
- /* Make room for underline on the right link */
- .header-actions .login-icon {
-     position: relative;
- }
+/* CTA hover/focus */
+.external-link:focus,
+.external-link:hover {
+  background-color: #ff962e;
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-1px);
+}
 
- /* Same underline style when current page is Cuenta */
- .header-actions .login-icon[aria-current="page"]::after {
-     content: "";
-     position: absolute;
-     left: 0;
-     right: 0;
-     bottom: -4px;
-     height: 2px;
-     background: #66c4ff;
-     border-radius: 2px;
- }
-
- /* Optional: tint the text to match hover/active */
- .header-actions .login-icon[aria-current="page"] {
-     color: #66c4ff;
- }
+/* =========================================================
+   10) MISC
+   ========================================================= */
+/* Disable animations when JS adds guard class */
+#site-header.no-anim .nav {
+  transition: none !important;
+}
