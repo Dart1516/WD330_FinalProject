@@ -23,3 +23,7 @@ export function pathKey(pathname) {
     const last = clean.split('/').pop();
     return last ? last.toLowerCase() : 'index.html';
 }
+
+/** just to debug */
+console.log('[Pathing] Running on', location.hostname, '| REPO_BASE:', REPO_BASE);
+

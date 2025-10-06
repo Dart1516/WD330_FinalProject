@@ -2,7 +2,7 @@ import { fetchPartial } from '../utils/partials-fetch.js';
 import { fixInternalLinks, fixAssetPaths } from './link-asset-fixer.js';
 import { setActiveNavLink } from '../effects/hover-current-nav-menu.js';
 
-// add header and footer plus fix the url inconsistesis +  highlight
+// add header and footer plus fix the url inconsistencies + highlight
 export async function injectHeaderFooter({
     headerSel = '#site-header',
     footerSel = '#site-footer',
@@ -20,11 +20,25 @@ export async function injectHeaderFooter({
     if (headerMount) headerMount.outerHTML = headerHTML;
     if (footerMount) footerMount.outerHTML = footerHTML;
 
+    // -------------------------------
+    // ✅ Header fixes
+    // -------------------------------
     const headerRoot = document.querySelector('header#site-header');
-    fixInternalLinks(headerRoot);
-    fixAssetPaths(headerRoot);
-    setActiveNavLink(headerRoot);
+    if (headerRoot) {
+        fixInternalLinks(headerRoot);
+        fixAssetPaths(headerRoot);
+        setActiveNavLink(headerRoot);
+        if (typeof onHeaderReady === 'function') onHeaderReady(headerRoot);
+    }
 
-    if (typeof onHeaderReady === 'function') onHeaderReady(headerRoot);
-    return headerRoot;
+    // -------------------------------
+    // ✅ Footer fixes (añade esto)
+    // -------------------------------
+    const footerRoot = document.querySelector('footer#site-footer');
+    if (footerRoot) {
+        fixInternalLinks(footerRoot);
+        fixAssetPaths(footerRoot);
+    }
+
+    return { headerRoot, footerRoot };
 }
