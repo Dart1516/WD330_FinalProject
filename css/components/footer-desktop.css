@@ -1,0 +1,206 @@
+@import url('./footer-mobile.css');
+
+/* ========== 1) TOKENS ========== */
+.footer {
+    --ft-bg: #090d2a;
+    --ft-border: rgba(255, 255, 255, 0.08);
+    --ft-dim: rgba(255, 255, 255, 0.64);
+    --ft-link: #cbe9ff;
+    --ft-link-hover: #c3e6ff;
+    --ft-title: #e6f3ff;
+background: radial-gradient(circle at 30% 30%,
+            /* foco del degradado */
+            rgba(58, 30, 120, 0.35) 20%,
+            /* violeta suave */
+            rgba(0, 0, 0, 0.8) 70%,
+            #050518 100%),
+        linear-gradient(180deg,
+            rgba(25, 30, 85, 0.85) 0%,
+            rgba(10, 10, 30, 0.95) 100%);
+    background-blend-mode: overlay;
+    color: rgba(255, 255, 255, 0.9);
+    border-top: 1px solid var(--ft-border);
+    color: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(16px);
+}
+
+/* ========== 2) LAYOUT ========== */
+.footer__container {
+    display: grid;
+    gap: 16px;
+    margin: 0 auto;
+    max-width: 1100px;
+    padding: 28px 20px 22px;
+    grid-template-areas:
+        "brand"
+        "grid"
+        "bottom";
+}
+
+.footer__brand {
+    grid-area: brand;
+}
+
+.footer__grid {
+    grid-area: grid;
+}
+
+.footer__bottom {
+    grid-area: bottom;
+}
+
+/* ========== 3) BRAND (logo + identity) ========== */
+/* Desktop: logo left, text right */
+.footer__brand {
+    align-items: center;
+    column-gap: 14px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    justify-items: start;
+    row-gap: 0;
+    text-align: left;
+}
+
+.footer__emblem {
+    filter: drop-shadow(0 0 12px rgba(140, 200, 255, 0.28));
+    height: auto;
+    margin: 0;
+    width: 120px;
+}
+
+.footer__identity {
+    max-width: 560px;
+}
+
+.footer__sitename {
+    color: var(--ft-title);
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    margin: 0 0 2px;
+}
+
+
+
+/* ========== 4) LINKS GRID (3 cols) ========== */
+.footer__grid {
+    border-top: 1px solid var(--ft-border);
+    display: grid;
+    gap: 24px 32px;
+    padding: 14px 0 8px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    text-align: left;
+}
+
+.footer__col {
+    min-width: 0;
+}
+
+.footer__title {
+    color: var(--ft-title);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    justify-self: start;
+    margin: 0 0 10px 0;
+}
+
+.footer__list {
+    display: grid;
+    gap: 8px;
+    justify-items: start;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer__list a {
+    border-bottom: 1px dashed transparent;
+    color: var(--ft-link);
+    display: inline-block;
+    font-size: 0.96rem;
+    padding: 2px 0;
+    text-decoration: none;
+    transition: color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.footer__list a:focus {
+    outline: 2px solid var(--ft-link);
+    outline-offset: 2px;
+}
+
+.footer__list a:hover,
+.footer__list a:focus {
+    border-color: var(--ft-link-hover);
+    color: var(--ft-link-hover);
+    transform: translateX(1px);
+}
+
+/* ========== 5) BOTTOM (back-to-top + legal) ========== */
+.footer__bottom {
+    align-items: center;
+    border-top: 1px solid var(--ft-border);
+    display: grid;
+    gap: 10px;
+    grid-template-columns: auto 1fr;
+    margin-top: 18px;
+    padding-top: 12px;
+}
+
+.footer__to-top {
+    color: var(--ft-link);
+    font-weight: 600;
+    justify-self: end;
+    text-decoration: none;
+}
+
+.footer__to-top:hover {
+    color: var(--ft-link-hover);
+}
+
+.footer__legal {
+    color: var(--ft-dim);
+    font-size: 0.88rem;
+    margin: 0;
+}
+
+/* ========== 6) EFFECTS (subtle) ========== */
+.footer__emblem:hover {
+    transform: scale(1.03);
+    transition: transform 0.2s ease;
+}
+
+.footer__sitename:hover {
+    color: var(--ft-link-hover);
+    transition: color 0.2s ease;
+}
+
+/* ========== 7) TAGLINE ======= */
+/* Layout: put tagline between brand and grid (desktop) */
+.footer__container {
+    display: grid;
+    gap: 16px;
+    margin: 0 auto;
+    max-width: 1100px;
+    padding: 28px 20px 22px;
+    grid-template-areas:
+        "brand"
+        "tagline"
+        /* 👈 NEW: tagline goes here */
+        "grid"
+        "bottom";
+}
+
+/* Tagline styles for desktop (no border; grid has its own top border) */
+.footer__tagline {
+    grid-area: tagline;
+    color: var(--ft-title);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: .2px;
+    margin: 0;
+    padding: 4px 0 2px;
+    /* just a bit of space under brand */
+    text-align: left;
+    /* matches brand alignment on desktop */
+}

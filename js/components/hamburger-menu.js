@@ -104,6 +104,7 @@ export function initHamburgerMenu({
         if (resizeRAF) return;
         resizeRAF = requestAnimationFrame(() => {
             resizeRAF = null;
+            
             withNoAnim(() => {
                 if (mq.matches) {
                     header.classList.remove('open');

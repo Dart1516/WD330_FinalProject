@@ -1,0 +1,142 @@
+/* =========================================================
+   FOOTER — MOBILE OVERRIDES (≤900px)
+   Clean version without !important
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    /* =========================================================
+     1) LAYOUT ORDER
+     Order: links → brand → bottom
+     ========================================================= */
+    footer.footer .footer__container {
+        display: grid;
+        gap: 20px;
+        grid-template-areas:
+            "grid"
+            "brand"
+            "bottom";
+    }
+
+    /* =========================================================
+     2) BRAND (Centered below links)
+     ========================================================= */
+    footer.footer .footer__brand {
+        border-top: 1px solid var(--ft-border);
+        display: grid;
+        justify-items: center;
+        padding-top: 20px;
+        row-gap: 10px;
+        text-align: center;
+    }
+
+    footer.footer .footer__emblem {
+        height: auto;
+        margin: 0;
+        width: 96px;
+        /* Bigger logo on mobile */
+        filter: drop-shadow(0 0 12px rgba(140, 200, 255, 0.28));
+    }
+
+    footer.footer .footer__identity {
+        max-width: 560px;
+    }
+
+    footer.footer .footer__sitename {
+        color: var(--ft-title);
+        font-size: 1.28rem;
+        font-weight: 800;
+        letter-spacing: 0.3px;
+        margin: 6px 0 4px;
+        text-align: center;
+    }
+
+    footer.footer .footer__tagline {
+        color: var(--ft-dim);
+        font-size: 0.95rem;
+        margin: 0;
+        text-align: center;
+    }
+
+    /* =========================================================
+     3) LINKS GRID (Single column, centered)
+     ========================================================= */
+    footer.footer .footer__grid {
+        border-top: 1px solid var(--ft-border);
+        display: grid;
+        gap: 22px;
+        padding: 14px 0 8px;
+        grid-template-columns: 1fr;
+        /* Stack all columns */
+        text-align: center;
+    }
+
+    footer.footer .footer__title {
+        justify-self: center;
+    }
+
+    footer.footer .footer__list {
+        justify-items: center;
+    }
+
+    /* =========================================================
+     4) BOTTOM (Stacked layout)
+     ========================================================= */
+    footer.footer .footer__bottom {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 1fr;
+    }
+
+    footer.footer .footer__to-top {
+        justify-self: start;
+    }
+
+    /*=========================================================
+     5) Centering logo an text
+     ========================================================= */
+         /* Stack brand vertically on mobile: emblem on top, name below */
+         footer.footer .footer__brand {
+             grid-template-columns: 1fr;
+             grid-auto-flow: row;
+             justify-items: center;
+             text-align: center;
+         }
+    
+         footer.footer .footer__emblem {
+             width: 96px;    
+         }
+
+         footer.footer .footer__sitename {
+             margin: 8px 0 4px;
+             text-align: center;
+         }
+
+         /* Tagline below name */
+                 /* Tagline below site name */
+                 /* Put tagline at the very top on mobile */
+                 footer.footer .footer__container {
+                     grid-template-areas:
+                         "tagline"
+                         /* 👈 now first */
+                         "grid"
+                         "brand"
+                         "bottom";
+                 }
+        
+                 /* Tagline block (H2) styles on mobile */
+                 footer.footer .footer__tagline {
+                     grid-area: tagline;
+                     color: var(--ft-title);
+                     font-size: 1.05rem;
+                     font-weight: 700;
+                     letter-spacing: .2px;
+                     margin: 0;
+                     /* remove default H2 margin */
+                     padding: 6px 0 10px;
+                     /* subtle spacing */
+                     text-align: center;
+                     /* centered like the ref */
+                     border-bottom: 1px solid var(--ft-border);
+                 }
+}

@@ -1,10 +1,7 @@
-@import url('./components/desktop-header.css');
-
-@import url('./components/background.css');
-
 @import url('./components/normalize.css');
-
-@import url('./components/footer.css');
+@import url('./components/background.css');
+@import url('./components/header-desktop.css');
+@import url('./components/footer-desktop.css');
 
 
 main {
