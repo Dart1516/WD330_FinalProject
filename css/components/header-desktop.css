@@ -6,7 +6,7 @@
    ========================================================= */
 /* Desktop header container */
 header {
-  background: var(--background-horizontal-brand-gradient);
+  background: var(--background-radial-dark-gradient);
   backdrop-filter: blur(16px);
   border-radius: var(--border-radius-medium);
   margin: 2.5%;

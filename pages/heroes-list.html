@@ -4,40 +4,170 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>HN — Lista de Heroes</title>
-    <meta name="description" content="Website de Heroes de la Tormenta en español? " />
+    <title>HN — Lista de Héroes</title>
+    <meta name="description" content="Website de Heroes de la Tormenta en español" />
     <meta name="author" content="Tu Nombre" />
+
+    <!-- Global/base styles -->
     <link rel="stylesheet" href="../css/base.css" />
+    <!-- Page-specific styles -->
+    <link rel="stylesheet" href="../css/pages/heroes-list-desktop.css" />
+
+    <!-- Icons & PWA -->
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
     <link rel="shortcut icon" href="../assets/icons/favicon.ico">
     <link rel="manifest" href="../assets/icons/site.webmanifest">
+
+    <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&family=Work+Sans:wght@400;600;700&display=swap"
         rel="stylesheet">
-
 </head>
 
 <body>
-
     <canvas id="stars" aria-hidden="true"></canvas>
 
-    <header id="site-header">    </header>
+    <header id="site-header"></header>
 
+    <!-- Main: Héroes (lista y filtros) -->
+    <main id="heroes-main" class="heroes-page" tabindex="-1">
+        <!-- Section header -->
+        <section class="heroes-header" aria-labelledby="heroes-title">
+            <h1 id="heroes-title" class="heroes-title">Héroes</h1>
+            <p class="heroes-subtitle">Explora y filtra por rol y universo.</p>
+        </section>
 
+        <!-- Filters bar -->
+        <section class="filters" aria-label="Barra de filtros">
+            <div class="filters__row">
+                <!-- Roles -->
+                <div class="filters__group" role="group" aria-label="Filtrar por rol">
+                    <button class="icon-chip" data-role="Tank" aria-pressed="false" aria-label="Filtrar por rol: Tank"
+                        title="Tanque">
+                        <img src="../assets/icons/roles/tank.svg" alt="" aria-hidden="true">
+                        <span class="chip-label"></span>
+                    </button>
+                    <button class="icon-chip" data-role="Bruiser" aria-pressed="false"
+                        aria-label="Filtrar por rol: Bruiser" title="Guerrero">
+                        <img src="../assets/icons/roles/bruiser.svg" alt="" aria-hidden="true">
+                        <span class="chip-label"></span>
+                    </button>
+                    <button class="icon-chip" data-role="Melee Assassin" aria-pressed="false"
+                        aria-label="Filtrar por rol: Melee Assassin" title="Asesino Cuerpo a Cuerpo">
+                        <img src="../assets/icons/roles/melee_assassin.svg" alt="" aria-hidden="true">
+                        <span class="chip-label"></span>
+                    </button>
+                    <button class="icon-chip" data-role="Ranged Assassin" aria-pressed="false"
+                        aria-label="Filtrar por rol: Ranged Assassin" title="Asesino a Distancia">
+                        <img src="../assets/icons/roles/ranged_assassin.svg" alt="" aria-hidden="true">
+                        <span class="chip-label"></span>
+                    </button>
+                    <button class="icon-chip" data-role="Healer" aria-pressed="false"
+                        aria-label="Filtrar por rol: Healer" title="Sanador">
+                        <img src="../assets/icons/roles/healer.svg" alt="" aria-hidden="true">
+                        <span class="chip-label"></span>
+                    </button>
+                    <button class="icon-chip" data-role="Support" aria-pressed="false"
+                        aria-label="Filtrar por rol: Support" title="Apoyo">
+                        <img src="../assets/icons/roles/support.svg" alt="" aria-hidden="true">
+                        <span class="chip-label"></span>
+                    </button>
+                </div>
 
-    <main id="main-content" tabindex="-1">
+                <!-- Universes -->
+                <div class="filters__group" role="group" aria-label="Filtrar por universo">
+                    <button class="icon-chip" data-universe="Warcraft" aria-pressed="false"
+                        aria-label="Filtrar por universo: Warcraft" title="Warcraft">
+                        <img src="../assets/icons/universes/warcraft.svg" alt="" aria-hidden="true">
+                        <span class="chip-label"> </span>
+                    </button>
+                    <button class="icon-chip" data-universe="Diablo" aria-pressed="false"
+                        aria-label="Filtrar por universo: Diablo" title="Diablo">
+                        <img src="../assets/icons/universes/diablo.svg" alt="" aria-hidden="true">
+                        <span class="chip-label"> </span>
+                    </button>
+                    <button class="icon-chip" data-universe="StarCraft" aria-pressed="false"
+                        aria-label="Filtrar por universo: StarCraft" title="StarCraft">
+                        <img src="../assets/icons/universes/starcraft.svg" alt="" aria-hidden="true">
+                        <span class="chip-label"> </span>
+                    </button>
+                    <button class="icon-chip" data-universe="Overwatch" aria-pressed="false"
+                        aria-label="Filtrar por universo: Overwatch" title="Overwatch">
+                        <img src="../assets/icons/universes/overwatch.svg" alt="" aria-hidden="true">
+                        <span class="chip-label"> </span>
+                    </button>
+                    <button class="icon-chip" data-universe="Nexus" aria-pressed="false"
+                        aria-label="Filtrar por universo: Nexus" title="Nexus">
+                        <img src="../assets/icons/universes/nexo.svg" alt="" aria-hidden="true">
+                        <span class="chip-label"> </span>
+                    </button>
+                </div>
 
-        <h1>
-            Página en construcción...
-        </h1>
+                <!-- Search + Clear + Counter -->
+                <div class="filters__search">
+                    <label class="sr-only" for="hero-search">Buscar por nombre</label>
+                    <input id="hero-search" class="search-input" type="search" placeholder="Filtrar por nombre…"
+                        autocomplete="off" />
+                    <button id="clear-filters" class="btn-clear" type="button"
+                        aria-label="Limpiar filtros">Limpiar</button>
+                </div>
+                <div class="filters__count" aria-live="polite" aria-atomic="true">
+                    <span id="results-count">0</span> héroes
+                </div>
+            </div>
+
+            <!-- Active filter chips (textual) -->
+            <div id="active-chips" class="active-chips" aria-live="polite" aria-atomic="true"></div>
+        </section>
+
+ 
+
+        <!-- Grid -->
+        <section class="heroes-grid-section" aria-label="Resultados">
+            <div id="grid" class="grid" role="grid" aria-busy="true" aria-live="polite">
+                <!-- JS will render skeletons, cards, empty/error states -->
+            </div>
+
+            <!-- States -->
+            <template id="tpl-skeleton">
+                <!-- Skeleton keeps 4:5 ratio -->
+                <div class="card skeleton" aria-hidden="true">
+                    <div class="thumb"></div>
+                </div>
+            </template>
+
+            <template id="tpl-empty">
+                <div class="state state--empty" role="status">
+                    <p>Sin resultados.</p>
+                    
+                </div>
+            </template>
+
+            <template id="tpl-error">
+                <div class="state state--error" role="alert">
+                    <p>Ocurrió un error al cargar los héroes.</p>
+                    a
+                </div>
+            </template>
+        </section>
+
+        <!-- Mobile overlay (sheet) -->
+        <dialog id="mobile-sheet" class="mobile-sheet" aria-label="Detalles rápidos">
+            <div class="sheet-content">
+                <button class="sheet-close" aria-label="Cerrar">✕</button>
+                <div class="sheet-body"><!-- populated by JS --></div>
+            </div>
+        </dialog>
     </main>
-
 
     <footer id="site-footer"></footer>
 
+    <!-- Global init (stars, header/footer inject, etc.) -->
     <script type="module" src="../js/main.js"></script>
+    <!-- Page module (heroes list UI) -->
+    <script type="module" src="/js/features/heroes-list.js"></script>
 </body>
 
 </html>

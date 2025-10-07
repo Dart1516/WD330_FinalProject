@@ -1,0 +1,73 @@
+ @import url('../variables.css');
+ @import url('../pages/heroes-list-mobile.css');
+
+ /* --- Responsive layout for the filters row --- */
+ @media (min-width: 880px) {
+     .filters__row {
+         align-items: center;
+         grid-template-columns: auto auto 1fr auto;
+     }
+ }
+
+ /* --- Hover animation (desktop only) --- */
+ @media (hover: hover) and (pointer: fine) {
+     .card:hover {
+         box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+         transform: translateY(-2px) scale(1.02);
+         transition:
+             box-shadow 160ms ease-out,
+             transform 160ms cubic-bezier(.22, .61, .36, 1);
+     }
+ }
+
+ /* --- 6 columns on wide screens --- */
+ @media (min-width: 1200px) {
+     .grid {
+         grid-template-columns: repeat(6, minmax(0, 1fr));
+     }
+ }
+
+ /* =========================================================
+  9) POPOVER (DESKTOP QUICK VIEW) - Floating panel on hover/focus with fade+rise animation.
+  ========================================================= */
+ .popover {
+     background: rgba(17, 22, 52, 0.98);
+     border: 1px solid var(--border-color-light);
+     border-radius: 12px;
+     box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+     color: var(--color-text-main);
+     max-width: 280px;
+     min-width: 220px;
+     opacity: 0;
+     padding: 10px 12px;
+     pointer-events: none;
+     position: absolute;
+     transform: translateY(8px);
+     transition: opacity 140ms ease-out, transform 140ms ease-out;
+     z-index: 50;
+ }
+
+ .popover[data-open="true"] {
+     opacity: 1;
+     pointer-events: auto;
+     transform: translateY(0);
+ }
+
+ .popover .desc {
+     color: var(--color-text-main);
+     font-size: 13px;
+ }
+
+ .popover .meta {
+     align-items: center;
+     color: var(--color-text-muted);
+     display: flex;
+     gap: 8px;
+     margin-bottom: 6px;
+     font-size: 12px;
+ }
+
+ .popover .title {
+     font-weight: 600;
+     margin: 0 0 4px;
+ }

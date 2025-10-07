@@ -1,0 +1,266 @@
+ @import url('../variables.css');
+
+ /* =========================================================
+  1) PAGE-LEVEL LOCAL TOKENS & WRAPPER
+  ========================================================= */
+ .heroes-page {
+     /* --- Local tokens (alphabetical) --- */
+     --card-aspect: 4 / 5;
+     --grid-gap: var(--space-medium);
+     --grid-min: 160px;
+     /* --- Wrapper --- */
+     background: var(--background-horizontal-brand-gradient);
+     color: var(--color-text-main);
+     padding: clamp(var(--space-small), 3vw, var(--space-large));
+ }
+
+ /* =========================================================
+  2) SECTION HEADER -  Title and subtitle of the page.
+  ========================================================= */
+ .heroes-header {
+     margin-bottom: var(--space-small);
+ }
+
+ .heroes-subtitle {
+     color: var(--color-text-muted);
+     margin: 0 0 calc(var(--space-medium) - 2px) 0;
+ }
+
+ .heroes-title {
+     color: var(--color-text-main);
+     margin: 0 0 6px 0;
+ }
+
+ /* =========================================================
+  3) FILTERS BAR  Groups (roles/universes), search, clear button and counter.
+  ========================================================= */
+ .filters {
+     margin-bottom: var(--space-small);
+     position: relative;
+ }
+
+ .filters__count {
+     color: var(--color-text-muted);
+     font-size: var(--font-size-small);
+ }
+
+ .filters__group {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 8px;
+ }
+
+ .filters__row {
+     display: grid;
+     gap: 10px;
+     grid-template-columns: 1fr;
+ }
+
+ .filters__search {
+     display: grid;
+     gap: 8px;
+     grid-template-columns: 1fr auto;
+ }
+
+ /* --- Icon chips (roles & universes) --- */
+ .icon-chip {
+     align-items: center;
+     background: transparent;
+     border: 1px solid var(--border-color-light);
+     border-radius: 999px;
+     color: var(--color-text-muted);
+     cursor: pointer;
+     display: inline-flex;
+     gap: 8px;
+     opacity: 0.7;
+     padding: 8px 10px;
+     transition:
+         background 120ms ease-out,
+         border-color 120ms ease-out,
+         box-shadow 120ms ease-out,
+         color 120ms ease-out,
+         opacity 120ms ease-out;
+ }
+
+ .icon-chip img {
+     display: inline-block;
+     filter: brightness(1.1);
+     height: 18px;
+     width: 18px;
+ }
+
+ /* --- Search input + buttons --- */
+ .btn-clear {
+     appearance: none;
+     background: rgba(255, 255, 255, 0.06);
+     border: 1px solid var(--border-color-light);
+     border-radius: var(--border-radius-medium);
+     color: var(--color-text-main);
+     cursor: pointer;
+     padding: 10px 12px;
+     transition:
+         background 120ms ease-out,
+         border-color 120ms ease-out,
+         box-shadow 120ms ease-out,
+         transform 120ms ease-out;
+ }
+
+ .btn-clear:hover {
+     border-color: var(--color-accent);
+     box-shadow: var(--shadow-soft);
+     transform: translateY(-1px);
+ }
+
+ .search-input {
+     background: rgba(255, 255, 255, 0.06);
+     border: 1px solid var(--border-color-light);
+     border-radius: var(--border-radius-medium);
+     color: var(--color-text-main);
+     outline: none;
+     padding: 10px 12px;
+ }
+
+ .search-input::placeholder {
+     color: var(--color-text-muted);
+ }
+
+ .search-input:focus-visible {
+     border-color: var(--color-accent);
+     box-shadow: 0 0 0 2px rgba(63, 124, 255, 0.28);
+ }
+
+ /* =========================================================
+  6) GRID & CARDS - Image-only cards with subtle universe gradient overlay.
+  ========================================================= */
+ .card {
+     background: rgba(255, 255, 255, 0.02);
+     border: 1px solid var(--border-color-light);
+     border-radius: var(--border-radius-large);
+     box-shadow: var(--shadow-soft);
+     isolation: isolate;
+     overflow: clip;
+     position: relative;
+ }
+
+ .card .thumb,
+ .card img {
+     aspect-ratio: var(--card-aspect);
+     background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+     display: block;
+     object-fit: cover;
+     width: 100%;
+ }
+
+ /* --- Universe gradient overlays (subtle) --- */
+ .card[data-universe="Diablo"]::after,
+ .card[data-universe="Nexus"]::after,
+ .card[data-universe="Overwatch"]::after,
+ .card[data-universe="StarCraft"]::after,
+ .card[data-universe="Warcraft"]::after {
+     content: "";
+     inset: 0;
+     mix-blend-mode: screen;
+     opacity: 0.15;
+     pointer-events: none;
+     position: absolute;
+ }
+
+ .card[data-universe="Diablo"]::after {
+     background: radial-gradient(60% 60% at 80% 20%, var(--u-diablo), transparent 70%);
+ }
+
+ .card[data-universe="Nexus"]::after {
+     background: radial-gradient(60% 60% at 80% 20%, var(--u-nexus), transparent 70%);
+ }
+
+ .card[data-universe="Overwatch"]::after {
+     background: radial-gradient(60% 60% at 80% 20%, var(--u-overwatch), transparent 70%);
+ }
+
+ .card[data-universe="StarCraft"]::after {
+     background: radial-gradient(60% 60% at 80% 20%, var(--u-starcraft), transparent 70%);
+ }
+
+ .card[data-universe="Warcraft"]::after {
+     background: radial-gradient(60% 60% at 80% 20%, var(--u-warcraft), transparent 70%);
+ }
+
+ /* --- Grid layout --- */
+ .grid {
+     display: grid;
+     gap: var(--grid-gap);
+     grid-template-columns: repeat(auto-fill, minmax(var(--grid-min), 1fr));
+     margin-top: var(--space-small);
+ }
+
+ /* --- Reduced motion --- */
+ @media (prefers-reduced-motion: reduce) {
+
+     .alpha-list button,
+     .btn-clear,
+     .card,
+     .icon-chip {
+         transition: none !important;
+     }
+
+     .card:hover {
+         transform: none !important;
+     }
+ }
+
+ /* =========================================================
+  8) STATES (EMPTY / ERROR)
+  ========================================================= */
+ .state {
+     color: var(--color-text-muted);
+     padding: 24px 10px;
+     text-align: center;
+ }
+
+ /* =========================================================
+  10) MOBILE SHEET (OVERLAY) -  Small modal sheet for touch devices.
+  ========================================================= */
+ .mobile-sheet {
+     background: transparent;
+     border: none;
+     padding: 0;
+     width: min(520px, 96vw);
+ }
+
+ .mobile-sheet::backdrop {
+     background: rgba(0, 0, 0, 0.5);
+ }
+
+ .sheet-body {
+     margin-top: 6px;
+ }
+
+ .sheet-close {
+     background: transparent;
+     border: 1px solid var(--border-color-light);
+     border-radius: var(--border-radius-medium);
+     color: var(--color-text-main);
+     cursor: pointer;
+     padding: 6px 8px;
+ }
+
+ .sheet-content {
+     background: rgba(17, 22, 52, 0.98);
+     border: 1px solid var(--border-color-light);
+     border-radius: 14px;
+     color: var(--color-text-main);
+     margin: 8vh auto 0;
+     padding: 14px;
+ }
+
+ /* =========================================================
+  11) UTILITIES
+  ========================================================= */
+ .sr-only {
+     clip: rect(1px, 1px, 1px, 1px);
+     height: 1px;
+     overflow: hidden;
+     position: absolute !important;
+     white-space: nowrap;
+     width: 1px;
+ }
