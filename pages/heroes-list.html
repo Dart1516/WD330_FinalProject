@@ -31,7 +31,7 @@
 
     <header id="site-header"></header>
 
-    <!-- Main: Héroes (lista y filtros) -->
+   <!-- Main: Héroes (lista y filtros) -->
     <main id="heroes-main" class="heroes-page" tabindex="-1">
         <!-- Section header -->
         <section class="heroes-header" aria-labelledby="heroes-title">
@@ -42,68 +42,81 @@
         <!-- Filters bar -->
         <section class="filters" aria-label="Barra de filtros">
             <div class="filters__row">
-                <!-- Roles -->
-                <div class="filters__group" role="group" aria-label="Filtrar por rol">
-                    <button class="icon-chip" data-role="Tank" aria-pressed="false" aria-label="Filtrar por rol: Tank"
-                        title="Tanque">
-                        <img src="../assets/icons/roles/tank.svg" alt="" aria-hidden="true">
-                        <span class="chip-label"></span>
-                    </button>
-                    <button class="icon-chip" data-role="Bruiser" aria-pressed="false"
-                        aria-label="Filtrar por rol: Bruiser" title="Guerrero">
-                        <img src="../assets/icons/roles/bruiser.svg" alt="" aria-hidden="true">
-                        <span class="chip-label"></span>
-                    </button>
-                    <button class="icon-chip" data-role="Melee Assassin" aria-pressed="false"
-                        aria-label="Filtrar por rol: Melee Assassin" title="Asesino Cuerpo a Cuerpo">
-                        <img src="../assets/icons/roles/melee_assassin.svg" alt="" aria-hidden="true">
-                        <span class="chip-label"></span>
-                    </button>
-                    <button class="icon-chip" data-role="Ranged Assassin" aria-pressed="false"
-                        aria-label="Filtrar por rol: Ranged Assassin" title="Asesino a Distancia">
-                        <img src="../assets/icons/roles/ranged_assassin.svg" alt="" aria-hidden="true">
-                        <span class="chip-label"></span>
-                    </button>
-                    <button class="icon-chip" data-role="Healer" aria-pressed="false"
-                        aria-label="Filtrar por rol: Healer" title="Sanador">
-                        <img src="../assets/icons/roles/healer.svg" alt="" aria-hidden="true">
-                        <span class="chip-label"></span>
-                    </button>
-                    <button class="icon-chip" data-role="Support" aria-pressed="false"
-                        aria-label="Filtrar por rol: Support" title="Apoyo">
-                        <img src="../assets/icons/roles/support.svg" alt="" aria-hidden="true">
-                        <span class="chip-label"></span>
-                    </button>
-                </div>
 
-                <!-- Universes -->
-                <div class="filters__group" role="group" aria-label="Filtrar por universo">
-                    <button class="icon-chip" data-universe="Warcraft" aria-pressed="false"
-                        aria-label="Filtrar por universo: Warcraft" title="Warcraft">
-                        <img src="../assets/icons/universes/warcraft.svg" alt="" aria-hidden="true">
-                        <span class="chip-label"> </span>
-                    </button>
-                    <button class="icon-chip" data-universe="Diablo" aria-pressed="false"
-                        aria-label="Filtrar por universo: Diablo" title="Diablo">
-                        <img src="../assets/icons/universes/diablo.svg" alt="" aria-hidden="true">
-                        <span class="chip-label"> </span>
-                    </button>
-                    <button class="icon-chip" data-universe="StarCraft" aria-pressed="false"
-                        aria-label="Filtrar por universo: StarCraft" title="StarCraft">
-                        <img src="../assets/icons/universes/starcraft.svg" alt="" aria-hidden="true">
-                        <span class="chip-label"> </span>
-                    </button>
-                    <button class="icon-chip" data-universe="Overwatch" aria-pressed="false"
-                        aria-label="Filtrar por universo: Overwatch" title="Overwatch">
-                        <img src="../assets/icons/universes/overwatch.svg" alt="" aria-hidden="true">
-                        <span class="chip-label"> </span>
-                    </button>
-                    <button class="icon-chip" data-universe="Nexus" aria-pressed="false"
-                        aria-label="Filtrar por universo: Nexus" title="Nexus">
-                        <img src="../assets/icons/universes/nexo.svg" alt="" aria-hidden="true">
-                        <span class="chip-label"> </span>
-                    </button>
+                <!-- EMBLEM BAR -->
+                <div id="emblem-bar" role="group" aria-label="Emblemas">
+                  <ul class="emblem-bar__grid">
+                    <!-- ROLES (1–6) -->
+                    <li class="emblem role-tank" aria-pressed="false"
+                        style="--mask:url('/assets/icons/roles/01_tank-removebg-preview.png')">
+                      <img src="../assets/icons/roles/01_tank-removebg-preview.png" alt="Tanque">
+                      <div class="ink" aria-hidden="true"></div>
+                    </li>
+
+                    <li class="emblem role-warrior" aria-pressed="false"
+                        style="--mask:url('/assets/icons/roles/02_guerrero-removebg-preview.png')">
+                      <img src="../assets/icons/roles/02_guerrero-removebg-preview.png" alt="Guerrero">
+                      <div class="ink" aria-hidden="true"></div>
+                    </li>
+
+                    <li class="emblem role-healer" aria-pressed="false"
+                        style="--mask:url('/assets/icons/roles/05_sanador-removebg-preview.png')">
+                      <img src="../assets/icons/roles/05_sanador-removebg-preview.png" alt="Sanador">
+                      <div class="ink" aria-hidden="true"></div>
+                    </li>
+
+                    <li class="emblem role-ass-range" aria-pressed="false"
+                        style="--mask:url('/assets/icons/roles/03_distancia-removebg-preview.png')">
+                      <img src="../assets/icons/roles/03_distancia-removebg-preview.png" alt="Asesino a distancia">
+                      <div class="ink" aria-hidden="true"></div>
+                    </li>
+
+                    <li class="emblem role-ass-melee" aria-pressed="false"
+                        style="--mask:url('/assets/icons/roles/04_mele-removebg-preview.png')">
+                      <img src="../assets/icons/roles/04_mele-removebg-preview.png" alt="Asesino cuerpo a cuerpo">
+                      <div class="ink" aria-hidden="true"></div>
+                    </li>
+
+                    <li class="emblem role-support" aria-pressed="false"
+                        style="--mask:url('/assets/icons/roles/06_apoyo-removebg-preview.png')">
+                      <img src="../assets/icons/roles/06_apoyo-removebg-preview.png" alt="Apoyo">
+                      <div class="ink" aria-hidden="true"></div>
+                    </li>
+
+                    <!-- UNIVERSOS (7–11) -->
+                    <li class="emblem uni-warcraft" aria-pressed="false"
+                        style="--mask:url('/assets/icons/universes/07_warcraft-removebg-preview.png')">
+                      <img src="../assets/icons/universes/07_warcraft-removebg-preview.png" alt="Warcraft">
+                      <div class="ink" aria-hidden="true"></div>
+                    </li>
+
+                    <li class="emblem uni-starcraft" aria-pressed="false"
+                        style="--mask:url('/assets/icons/universes/08_starcraft-removebg-preview.png')">
+                      <img src="../assets/icons/universes/08_starcraft-removebg-preview.png" alt="Starcraft">
+                      <div class="ink" aria-hidden="true"></div>
+                    </li>
+
+                    <li class="emblem uni-diablo" aria-pressed="false"
+                        style="--mask:url('/assets/icons/universes/09_diablo-removebg-preview.png')">
+                      <img src="../assets/icons/universes/09_diablo-removebg-preview.png" alt="Diablo">
+                      <div class="ink" aria-hidden="true"></div>
+                    </li>
+
+                    <li class="emblem uni-overwatch" aria-pressed="false"
+                        style="--mask:url('/assets/icons/universes/10_overwatch-removebg-preview.png')">
+                      <img src="../assets/icons/universes/10_overwatch-removebg-preview.png" alt="Overwatch">
+                      <div class="ink" aria-hidden="true"></div>
+                    </li>
+
+                    <li class="emblem uni-nexus" aria-pressed="false"
+                        style="--mask:url('/assets/icons/universes/11_nexo-removebg-preview.png')">
+                      <img src="../assets/icons/universes/11_nexo-removebg-preview.png" alt="Nexus">
+                      <div class="ink" aria-hidden="true"></div>
+                    </li>
+                  </ul>
+                  <!-- (Tu JS ya maneja el toggle; no se incluye script aquí) -->
                 </div>
+                <!-- /EMBLEM BAR -->
 
                 <!-- Search + Clear + Counter -->
                 <div class="filters__search">
@@ -122,8 +135,6 @@
             <div id="active-chips" class="active-chips" aria-live="polite" aria-atomic="true"></div>
         </section>
 
- 
-
         <!-- Grid -->
         <section class="heroes-grid-section" aria-label="Resultados">
             <div id="grid" class="grid" role="grid" aria-busy="true" aria-live="polite">
@@ -141,7 +152,6 @@
             <template id="tpl-empty">
                 <div class="state state--empty" role="status">
                     <p>Sin resultados.</p>
-                    
                 </div>
             </template>
 

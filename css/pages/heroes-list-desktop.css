@@ -1,13 +1,33 @@
  @import url('../variables.css');
+ @import url('../components/emblem-bar.css');
  @import url('../pages/heroes-list-mobile.css');
 
  /* --- Responsive layout for the filters row --- */
- @media (min-width: 880px) {
-     .filters__row {
-         align-items: center;
-         grid-template-columns: auto auto 1fr auto;
-     }
- }
+/* --- Responsive layout for the filters row --- */
+@media (min-width: 880px) {
+    .filters__row {
+        align-items: center;
+        column-gap: 14px;
+        grid-template-columns: 1fr auto auto;
+        /* [emblem-bar] [search] [count] */
+    }
+
+    /* El contenedor de búsqueda se alinea a la derecha y gana ancho adaptable */
+    .filters__search {
+        justify-self: end;
+        width: clamp(280px, 36vw, 520px);
+    }
+
+    /* El input ocupa todo el ancho del contenedor de búsqueda */
+    .filters__search .search-input {
+        width: 100%;
+    }
+
+    /* El contador se queda pegado a la derecha */
+    .filters__count {
+        justify-self: end;
+    }
+}
 
  /* --- Hover animation (desktop only) --- */
  @media (hover: hover) and (pointer: fine) {

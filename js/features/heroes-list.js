@@ -1,4 +1,4 @@
-// js/feature/heroes-list.js
+// js/features/heroes-list.js
 // All comments in English.
 
 import { getAllHeroes, DataConfig } from './heroes-data.js';
@@ -16,6 +16,7 @@ const $ = {
     tplEmpty: document.getElementById('tpl-empty'),
     tplError: document.getElementById('tpl-error'),
     sheet: document.getElementById('mobile-sheet'),
+    emblemBar: document.getElementById('emblem-bar'),
 };
 
 const state = {
@@ -35,7 +36,7 @@ boot().catch(showError);
 
 async function boot() {
     renderSkeletons(8);
-    bindFilterChips();
+    bindFilterChips();   // now reads from #emblem-bar .emblem
     bindSearch();
     bindClear();
     bindSheet();
@@ -53,16 +54,71 @@ async function boot() {
 /* =========================================================
    3) EVENTS
    ========================================================= */
+// Maps new emblem classes -> filter tokens used by data
+const ROLE_BY_CLASS = {
+    'role-tank': 'Tank',
+    'role-warrior': 'Bruiser',
+    'role-ass-melee': 'Melee Assassin',
+    'role-ass-range': 'Ranged Assassin',
+    'role-healer': 'Healer',
+    'role-support': 'Support',
+};
+
+const UNIVERSE_BY_CLASS = {
+    'uni-warcraft': 'Warcraft',
+    'uni-starcraft': 'StarCraft',
+    'uni-diablo': 'Diablo',
+    'uni-overwatch': 'Overwatch',
+    'uni-nexus': 'Nexus',
+};
+
 function bindFilterChips() {
-    document.querySelectorAll('.icon-chip').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const role = btn.dataset.role;
-            const uni = btn.dataset.universe;
-            if (role) toggle(btn, state.roles, role);
-            if (uni) toggle(btn, state.universes, uni);
-            applyFilters();
-        });
+    // Switch from button.icon-chip to #emblem-bar .emblem with event delegation
+    if (!$.emblemBar) return;
+
+    const handleToggle = (item) => {
+        if (!item || !item.classList.contains('emblem')) return;
+
+        const roleToken = getRoleToken(item);
+        const uniToken = getUniverseToken(item);
+
+        if (roleToken) toggle(item, state.roles, roleToken);
+        if (uniToken) toggle(item, state.universes, uniToken);
+
+        // Sync visual class with aria-pressed
+        const pressed = item.getAttribute('aria-pressed') === 'true';
+        item.classList.toggle('active', pressed);
+
+        applyFilters();
+    };
+
+    $.emblemBar.addEventListener('click', (e) => {
+        const item = /** @type {HTMLElement} */(e.target.closest('.emblem'));
+        if (!item || !$.emblemBar.contains(item)) return;
+        handleToggle(item);
     });
+
+    $.emblemBar.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const item = /** @type {HTMLElement} */(e.target.closest('.emblem'));
+        if (!item || !$.emblemBar.contains(item)) return;
+        e.preventDefault();
+        handleToggle(item);
+    });
+}
+
+function getRoleToken(el) {
+    for (const cls of el.classList) {
+        if (ROLE_BY_CLASS[cls]) return ROLE_BY_CLASS[cls];
+    }
+    return null;
+}
+
+function getUniverseToken(el) {
+    for (const cls of el.classList) {
+        if (UNIVERSE_BY_CLASS[cls]) return UNIVERSE_BY_CLASS[cls];
+    }
+    return null;
 }
 
 function bindSearch() {
@@ -84,12 +140,21 @@ function bindClear() {
         state.universes.clear();
         state.text = '';
         if ($.search) $.search.value = '';
-        document.querySelectorAll('.icon-chip[aria-pressed="true"]').forEach(b => b.setAttribute('aria-pressed', 'false'));
+
+        // Clear emblem selections (instead of old .icon-chip)
+        if ($.emblemBar) {
+            $.emblemBar.querySelectorAll('.emblem').forEach((el) => {
+                el.setAttribute('aria-pressed', 'false');
+                el.classList.remove('active');
+            });
+        }
+
         applyFilters();
     });
 }
 
 function toggle(btn, set, value) {
+    // Keeps same API but now works with <li.emblem>
     if (set.has(value)) {
         set.delete(value);
         btn.setAttribute('aria-pressed', 'false');
@@ -312,25 +377,26 @@ function openSheet(hero) {
    8) ICONS & UTILS
    ========================================================= */
 function iconRole(role) {
+    // Updated to new PNG asset names
     const map = {
-        Tank: DataConfig.joinPublic('/assets/icons/roles/tank.svg'),
-        Bruiser: DataConfig.joinPublic('/assets/icons/roles/bruiser.svg'),
-        'Melee Assassin': DataConfig.joinPublic('/assets/icons/roles/melee_assassin.svg'),
-        'Ranged Assassin': DataConfig.joinPublic('/assets/icons/roles/ranged_assassin.svg'),
-        Healer: DataConfig.joinPublic('/assets/icons/roles/healer.svg'),
-        Support: DataConfig.joinPublic('/assets/icons/roles/support.svg'),
+        Tank: DataConfig.joinPublic('/assets/icons/roles/01_tank-removebg-preview.png'),
+        Bruiser: DataConfig.joinPublic('/assets/icons/roles/02_guerrero-removebg-preview.png'),
+        'Melee Assassin': DataConfig.joinPublic('/assets/icons/roles/04_mele-removebg-preview.png'), // file is "mele"
+        'Ranged Assassin': DataConfig.joinPublic('/assets/icons/roles/03_distancia-removebg-preview.png'),
+        Healer: DataConfig.joinPublic('/assets/icons/roles/05_sanador-removebg-preview.png'),
+        Support: DataConfig.joinPublic('/assets/icons/roles/06_apoyo-removebg-preview.png'),
     };
-    const src = map[role] || map['Melee Assassin']; // fallback safe
+    const src = map[role] || map['Melee Assassin']; // safe fallback
     return `<img src="${src}" alt="" aria-hidden="true" style="width:14px;height:14px;vertical-align:-2px;filter:brightness(1.1)">`;
 }
 
 function iconUniverse(u) {
     const map = {
-        Warcraft: DataConfig.joinPublic('/assets/icons/universes/warcraft.svg'),
-        Diablo: DataConfig.joinPublic('/assets/icons/universes/diablo.svg'),
-        StarCraft: DataConfig.joinPublic('/assets/icons/universes/starcraft.svg'),
-        Overwatch: DataConfig.joinPublic('/assets/icons/universes/overwatch.svg'),
-        Nexus: DataConfig.joinPublic('/assets/icons/universes/nexus.svg'),
+        Warcraft: DataConfig.joinPublic('/assets/icons/universes/07_warcraft-removebg-preview.png'),
+        Diablo: DataConfig.joinPublic('/assets/icons/universes/09_diablo-removebg-preview.png'),
+        StarCraft: DataConfig.joinPublic('/assets/icons/universes/08_starcraft-removebg-preview.png'),
+        Overwatch: DataConfig.joinPublic('/assets/icons/universes/10_overwatch-removebg-preview.png'),
+        Nexus: DataConfig.joinPublic('/assets/icons/universes/11_nexo-removebg-preview.png'),
     };
     const src = map[u] || map.Nexus;
     return `<img src="${src}" alt="" aria-hidden="true" style="width:14px;height:14px;vertical-align:-2px;filter:brightness(1.1)">`;

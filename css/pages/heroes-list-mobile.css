@@ -44,11 +44,7 @@
      font-size: var(--font-size-small);
  }
 
- .filters__group {
-     display: flex;
-     flex-wrap: wrap;
-     gap: 8px;
- }
+ 
 
  .filters__row {
      display: grid;
@@ -62,32 +58,7 @@
      grid-template-columns: 1fr auto;
  }
 
- /* --- Icon chips (roles & universes) --- */
- .icon-chip {
-     align-items: center;
-     background: transparent;
-     border: 1px solid var(--border-color-light);
-     border-radius: 999px;
-     color: var(--color-text-muted);
-     cursor: pointer;
-     display: inline-flex;
-     gap: 8px;
-     opacity: 0.7;
-     padding: 8px 10px;
-     transition:
-         background 120ms ease-out,
-         border-color 120ms ease-out,
-         box-shadow 120ms ease-out,
-         color 120ms ease-out,
-         opacity 120ms ease-out;
- }
-
- .icon-chip img {
-     display: inline-block;
-     filter: brightness(1.1);
-     height: 18px;
-     width: 18px;
- }
+ 
 
  /* --- Search input + buttons --- */
  .btn-clear {
@@ -198,8 +169,7 @@
 
      .alpha-list button,
      .btn-clear,
-     .card,
-     .icon-chip {
+     .card {
          transition: none !important;
      }
 
