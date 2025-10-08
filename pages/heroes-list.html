@@ -31,116 +31,103 @@
 
     <header id="site-header"></header>
 
-   <!-- Main: Héroes (lista y filtros) -->
     <main id="heroes-main" class="heroes-page" tabindex="-1">
         <!-- Section header -->
         <section class="heroes-header" aria-labelledby="heroes-title">
             <h1 id="heroes-title" class="heroes-title">Héroes</h1>
             <p class="heroes-subtitle">Explora y filtra por rol y universo.</p>
         </section>
-
+    
         <!-- Filters bar -->
         <section class="filters" aria-label="Barra de filtros">
             <div class="filters__row">
-
-                <!-- EMBLEM BAR -->
+    
+                <!-- EMBLEM BAR (sin --mask inline; las máscaras están en el CSS) -->
                 <div id="emblem-bar" role="group" aria-label="Emblemas">
-                  <ul class="emblem-bar__grid">
-                    <!-- ROLES (1–6) -->
-                    <li class="emblem role-tank" aria-pressed="false"
-                        style="--mask:url('/assets/icons/roles/01_tank-removebg-preview.png')">
-                      <img src="../assets/icons/roles/01_tank-removebg-preview.png" alt="Tanque">
-                      <div class="ink" aria-hidden="true"></div>
-                    </li>
-
-                    <li class="emblem role-warrior" aria-pressed="false"
-                        style="--mask:url('/assets/icons/roles/02_guerrero-removebg-preview.png')">
-                      <img src="../assets/icons/roles/02_guerrero-removebg-preview.png" alt="Guerrero">
-                      <div class="ink" aria-hidden="true"></div>
-                    </li>
-
-                    <li class="emblem role-healer" aria-pressed="false"
-                        style="--mask:url('/assets/icons/roles/05_sanador-removebg-preview.png')">
-                      <img src="../assets/icons/roles/05_sanador-removebg-preview.png" alt="Sanador">
-                      <div class="ink" aria-hidden="true"></div>
-                    </li>
-
-                    <li class="emblem role-ass-range" aria-pressed="false"
-                        style="--mask:url('/assets/icons/roles/03_distancia-removebg-preview.png')">
-                      <img src="../assets/icons/roles/03_distancia-removebg-preview.png" alt="Asesino a distancia">
-                      <div class="ink" aria-hidden="true"></div>
-                    </li>
-
-                    <li class="emblem role-ass-melee" aria-pressed="false"
-                        style="--mask:url('/assets/icons/roles/04_mele-removebg-preview.png')">
-                      <img src="../assets/icons/roles/04_mele-removebg-preview.png" alt="Asesino cuerpo a cuerpo">
-                      <div class="ink" aria-hidden="true"></div>
-                    </li>
-
-                    <li class="emblem role-support" aria-pressed="false"
-                        style="--mask:url('/assets/icons/roles/06_apoyo-removebg-preview.png')">
-                      <img src="../assets/icons/roles/06_apoyo-removebg-preview.png" alt="Apoyo">
-                      <div class="ink" aria-hidden="true"></div>
-                    </li>
-
-                    <!-- UNIVERSOS (7–11) -->
-                    <li class="emblem uni-warcraft" aria-pressed="false"
-                        style="--mask:url('/assets/icons/universes/07_warcraft-removebg-preview.png')">
-                      <img src="../assets/icons/universes/07_warcraft-removebg-preview.png" alt="Warcraft">
-                      <div class="ink" aria-hidden="true"></div>
-                    </li>
-
-                    <li class="emblem uni-starcraft" aria-pressed="false"
-                        style="--mask:url('/assets/icons/universes/08_starcraft-removebg-preview.png')">
-                      <img src="../assets/icons/universes/08_starcraft-removebg-preview.png" alt="Starcraft">
-                      <div class="ink" aria-hidden="true"></div>
-                    </li>
-
-                    <li class="emblem uni-diablo" aria-pressed="false"
-                        style="--mask:url('/assets/icons/universes/09_diablo-removebg-preview.png')">
-                      <img src="../assets/icons/universes/09_diablo-removebg-preview.png" alt="Diablo">
-                      <div class="ink" aria-hidden="true"></div>
-                    </li>
-
-                    <li class="emblem uni-overwatch" aria-pressed="false"
-                        style="--mask:url('/assets/icons/universes/10_overwatch-removebg-preview.png')">
-                      <img src="../assets/icons/universes/10_overwatch-removebg-preview.png" alt="Overwatch">
-                      <div class="ink" aria-hidden="true"></div>
-                    </li>
-
-                    <li class="emblem uni-nexus" aria-pressed="false"
-                        style="--mask:url('/assets/icons/universes/11_nexo-removebg-preview.png')">
-                      <img src="../assets/icons/universes/11_nexo-removebg-preview.png" alt="Nexus">
-                      <div class="ink" aria-hidden="true"></div>
-                    </li>
-                  </ul>
-                  <!-- (Tu JS ya maneja el toggle; no se incluye script aquí) -->
+                    <ul class="emblem-bar__grid">
+                        <!-- ROLES (1–6) -->
+                        <li class="emblem role-tank" aria-pressed="false">
+                            <img src="../assets/icons/roles/01_tank-removebg-preview.png" alt="Tanque">
+                            <div class="ink" aria-hidden="true"></div>
+                        </li>
+    
+                        <li class="emblem role-warrior" aria-pressed="false">
+                            <img src="../assets/icons/roles/02_guerrero-removebg-preview.png" alt="Guerrero">
+                            <div class="ink" aria-hidden="true"></div>
+                        </li>
+    
+                        <li class="emblem role-healer" aria-pressed="false">
+                            <img src="../assets/icons/roles/05_sanador-removebg-preview.png" alt="Sanador">
+                            <div class="ink" aria-hidden="true"></div>
+                        </li>
+    
+                        <li class="emblem role-ass-range" aria-pressed="false">
+                            <img src="../assets/icons/roles/03_distancia-removebg-preview.png" alt="Asesino a distancia">
+                            <div class="ink" aria-hidden="true"></div>
+                        </li>
+    
+                        <li class="emblem role-ass-melee" aria-pressed="false">
+                            <img src="../assets/icons/roles/04_mele-removebg-preview.png" alt="Asesino cuerpo a cuerpo">
+                            <div class="ink" aria-hidden="true"></div>
+                        </li>
+    
+                        <li class="emblem role-support" aria-pressed="false">
+                            <img src="../assets/icons/roles/06_apoyo-removebg-preview.png" alt="Apoyo">
+                            <div class="ink" aria-hidden="true"></div>
+                        </li>
+    
+                        <!-- UNIVERSOS (7–11) -->
+                        <li class="emblem uni-warcraft" aria-pressed="false">
+                            <img src="../assets/icons/universes/07_warcraft-removebg-preview.png" alt="Warcraft">
+                            <div class="ink" aria-hidden="true"></div>
+                        </li>
+    
+                        <li class="emblem uni-starcraft" aria-pressed="false">
+                            <img src="../assets/icons/universes/08_starcraft-removebg-preview.png" alt="StarCraft">
+                            <div class="ink" aria-hidden="true"></div>
+                        </li>
+    
+                        <li class="emblem uni-diablo" aria-pressed="false">
+                            <img src="../assets/icons/universes/09_diablo-removebg-preview.png" alt="Diablo">
+                            <div class="ink" aria-hidden="true"></div>
+                        </li>
+    
+                        <li class="emblem uni-overwatch" aria-pressed="false">
+                            <img src="../assets/icons/universes/10_overwatch-removebg-preview.png" alt="Overwatch">
+                            <div class="ink" aria-hidden="true"></div>
+                        </li>
+    
+                        <li class="emblem uni-nexus" aria-pressed="false">
+                            <img src="../assets/icons/universes/11_nexo-removebg-preview.png" alt="Nexus">
+                            <div class="ink" aria-hidden="true"></div>
+                        </li>
+                    </ul>
                 </div>
                 <!-- /EMBLEM BAR -->
-
+    
                 <!-- Search + Clear + Counter -->
                 <div class="filters__search">
                     <label class="sr-only" for="hero-search">Buscar por nombre</label>
                     <input id="hero-search" class="search-input" type="search" placeholder="Filtrar por nombre…"
                         autocomplete="off" />
-                    <button id="clear-filters" class="btn-clear" type="button"
-                        aria-label="Limpiar filtros">Limpiar</button>
+                    <button id="clear-filters" class="btn-clear" type="button" aria-label="Limpiar filtros">Limpiar</button>
                 </div>
+    
                 <div class="filters__count" aria-live="polite" aria-atomic="true">
                     <span id="results-count">0</span> héroes
                 </div>
             </div>
-
+    
             <!-- Active filter chips (textual) -->
             <div id="active-chips" class="active-chips" aria-live="polite" aria-atomic="true"></div>
         </section>
-
+    
         <!-- Grid -->
         <section class="heroes-grid-section" aria-label="Resultados">
             <div id="grid" class="grid" role="grid" aria-busy="true" aria-live="polite">
                 <!-- JS will render skeletons, cards, empty/error states -->
             </div>
-
+    
             <!-- States -->
             <template id="tpl-skeleton">
                 <!-- Skeleton keeps 4:5 ratio -->
@@ -148,13 +135,13 @@
                     <div class="thumb"></div>
                 </div>
             </template>
-
+    
             <template id="tpl-empty">
                 <div class="state state--empty" role="status">
                     <p>Sin resultados.</p>
                 </div>
             </template>
-
+    
             <template id="tpl-error">
                 <div class="state state--error" role="alert">
                     <p>Ocurrió un error al cargar los héroes.</p>
@@ -162,7 +149,7 @@
                 </div>
             </template>
         </section>
-
+    
         <!-- Mobile overlay (sheet) -->
         <dialog id="mobile-sheet" class="mobile-sheet" aria-label="Detalles rápidos">
             <div class="sheet-content">

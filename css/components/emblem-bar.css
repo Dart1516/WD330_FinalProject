@@ -213,15 +213,55 @@
 }
 
 /* =========================================================
-   8) OPTIONAL TWEAKS (commented)
+   8) MASK SOURCES (CENTRALIZED)
    ---------------------------------------------------------
-   - Use any of these if OFF still feels too dark
+   - Set --mask per emblem class (relative to this CSS file)
+   - Remove inline style="--mask: …" from HTML items
    ========================================================= */
-/* Tip: bump base brightness in OFF a bit more */
-/* #emblem-bar .emblem img { filter: grayscale(1) saturate(0) brightness(1.2) contrast(1.12); } */
 
-/* Tip: lighter purple for OFF tint */
-/* #emblem-bar { --off-fill: linear-gradient(180deg, #8b7ae0, #4a3a78); } */
+/* Roles */
+#emblem-bar .role-tank {
+    --mask: url('../../assets/icons/roles/01_tank-removebg-preview.png');
+}
 
-/* Tip: micro glow even when OFF (subtle) */
-/* #emblem-bar .emblem { filter: drop-shadow(0 0 6px rgba(167,121,255,.18)); } */
+#emblem-bar .role-warrior {
+    --mask: url('../../assets/icons/roles/02_guerrero-removebg-preview.png');
+}
+
+#emblem-bar .role-ass-range {
+    --mask: url('../../assets/icons/roles/03_distancia-removebg-preview.png');
+}
+
+#emblem-bar .role-ass-melee {
+    --mask: url('../../assets/icons/roles/04_mele-removebg-preview.png');
+}
+
+/* "mele" */
+#emblem-bar .role-healer {
+    --mask: url('../../assets/icons/roles/05_sanador-removebg-preview.png');
+}
+
+#emblem-bar .role-support {
+    --mask: url('../../assets/icons/roles/06_apoyo-removebg-preview.png');
+}
+
+/* Universes */
+#emblem-bar .uni-warcraft {
+    --mask: url('../../assets/icons/universes/07_warcraft-removebg-preview.png');
+}
+
+#emblem-bar .uni-starcraft {
+    --mask: url('../../assets/icons/universes/08_starcraft-removebg-preview.png');
+}
+
+#emblem-bar .uni-diablo {
+    --mask: url('../../assets/icons/universes/09_diablo-removebg-preview.png');
+}
+
+#emblem-bar .uni-overwatch {
+    --mask: url('../../assets/icons/universes/10_overwatch-removebg-preview.png');
+}
+
+#emblem-bar .uni-nexus {
+    --mask: url('../../assets/icons/universes/11_nexo-removebg-preview.png');
+}
