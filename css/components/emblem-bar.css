@@ -1,127 +1,131 @@
 /* =========================================================
-   1) SCOPE & TOKENS
+   EMBLEM BAR — CSS unificado (con tokens globales + badges)
    ---------------------------------------------------------
-   - All variables live on #emblem-bar to avoid global bleed
-   - OFF: uniform purple (dim at ~70% opacity)
+   - Reutiliza los mismos gradientes y máscaras para:
+     a) la barra de emblemas
+     b) los “badges” del pop-up (.popover .badge)
+   - No modifica tus rutas de íconos PNG.
    ========================================================= */
-#emblem-bar {
-    /* --- Glow tokens --- */
+
+/* =========================================================
+   0) TOKENS GLOBALES (disponibles en toda la página)
+   ========================================================= */
+:root {
+    /* Glow (puedes usarlo en sombras del UI) */
     --glow: rgba(167, 121, 255, .9);
     --glow-soft: rgba(167, 121, 255, .35);
-    --group-gap: clamp(12px, 2vw, 24px);
 
-    /* --- Size & base visuals --- */
-    --off-fill: linear-gradient(180deg, #7a6ac0, #3f2f67);
-    --off-opacity: .72;
-    /* ↓ more subtle than .95 */
-    --size: 44px;
-    /* ↓ compact default size */
-
-    /* ===== ON (per-role / per-universe) [Not verified: close matches] */
     /* Roles */
     --c-assmelee: linear-gradient(180deg, #c48cff, #7a35ff);
-    /* Purple */
     --c-assranged: linear-gradient(180deg, #ff8a8a, #ff3b3b);
-    /* Red */
     --c-healer: linear-gradient(180deg, #b8ff8a, #3edb5a);
-    /* Green */
     --c-support: linear-gradient(180deg, #ffc07a, #ff7a1a);
-    /* Orange */
     --c-tank: linear-gradient(180deg, #ffe36e, #ffb800);
-    /* Yellow */
     --c-warrior: linear-gradient(180deg, #86c5ff, #2a8dff);
-    /* Blue */
 
-    /* Universes */
+    /* Universos */
     --c-diablo: linear-gradient(180deg, #ff9b6a, #ff3b0a);
-    /* Inferno red/orange */
     --c-nexus: linear-gradient(180deg, #cfa8ff, #8e5bff);
-    /* Violet */
     --c-overwatch: linear-gradient(180deg, #1f1f1f 0%, #f99e1a 55%, #f9ae2b 100%);
-    /* Black+Orange */
     --c-starcraft: linear-gradient(180deg, #a7d4ff, #4db2ff);
-    /* Blue */
     --c-warcraft: linear-gradient(180deg, #ffd766, #d6a300);
-    /* Golden yellow */
+}
+
+/* =========================================================
+   1) SCOPE & TOKENS (solo para el componente de la barra)
+   ---------------------------------------------------------
+   - Variables propias del #emblem-bar
+   - OFF: morado uniforme (opaco ~72%)
+   ========================================================= */
+#emblem-bar {
+    /* Separación visual entre grupos (roles / universos) */
+    --group-gap: clamp(12px, 2vw, 24px);
+
+    /* Tamaño base de los iconos */
+    --size: 44px;
+
+    /* Aspecto cuando está “apagado” (sin hover/active) */
+    --off-fill: linear-gradient(180deg, #7a6ac0, #3f2f67);
+    --off-opacity: .72;
 }
 
 /* =========================================================
    2) LAYOUT
    ---------------------------------------------------------
-   - Single row with horizontal scroll when needed
+   - Fila única con scroll horizontal si hace falta
    ========================================================= */
 #emblem-bar .emblem-bar__grid {
     display: flex;
     flex-wrap: nowrap;
-    /* single row */
+    /* una sola fila */
     gap: 10px;
-    /* ↓ tighter spacing */
     list-style: none;
     margin: 0;
     overflow-x: auto;
-    /* horizontal scroll */
+    /* scroll horizontal */
     padding: 2px;
-    /* ↓ tighter padding */
     scrollbar-width: thin;
 }
 
 /* =========================================================
    3) COMPONENT CORE
    ---------------------------------------------------------
-   - Container, base image, masked color layer
-   - OFF: uniform purple (dim)
+   - Contenedor, imagen base, capa de color enmascarada
+   - OFF: morado uniforme “atenuado”
    ========================================================= */
 #emblem-bar .emblem {
     cursor: pointer;
     display: grid;
-    height: var(--size);
     place-items: center;
     position: relative;
-    transition: filter .18s ease, transform .18s ease;
     width: var(--size);
+    height: var(--size);
+    transition: filter .18s ease, transform .18s ease;
 }
 
 #emblem-bar .emblem img {
-    filter: grayscale(1) saturate(0) brightness(1.12) contrast(1.08);
-    /* slightly toned-down base */
     height: 100%;
+    width: 100%;
     object-fit: contain;
+    filter: grayscale(1) saturate(0) brightness(1.12) contrast(1.08);
     opacity: .96;
     transition: filter .22s ease, opacity .22s ease, transform .22s ease;
-    width: 100%;
 }
 
-/* Masked color layer: OFF uses --off-fill, ON uses --fill */
+/* Capa coloreada con máscara:
+   OFF usa --off-fill; ON usa --fill (por rol/universo) */
 #emblem-bar .ink {
-    -webkit-mask: var(--mask) center/contain no-repeat;
-    background: var(--off-fill);
-    filter: brightness(1.04) contrast(1.06);
-    inset: 0;
-    mask: var(--mask) center/contain no-repeat;
-    opacity: var(--off-opacity);
-    /* ~70% visibility when OFF */
-    pointer-events: none;
     position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: var(--off-fill);
+    opacity: var(--off-opacity);
+    /* ~70% visible cuando OFF */
+    -webkit-mask: var(--mask) center/contain no-repeat;
+    mask: var(--mask) center/contain no-repeat;
+    filter: brightness(1.04) contrast(1.06);
     transition: background .22s ease, filter .22s ease, opacity .22s ease;
 }
 
 /* =========================================================
    4) STATES
    ---------------------------------------------------------
-   - Hover/Active: neon glow + per-item color
+   - Hover/Active: glow + color de ítem
    ========================================================= */
 #emblem-bar .emblem:hover,
 #emblem-bar .emblem.active {
-    filter: drop-shadow(0 0 10px var(--glow-soft)) drop-shadow(0 0 18px var(--glow));
+    filter:
+        drop-shadow(0 0 10px var(--glow-soft)) drop-shadow(0 0 18px var(--glow));
     transform: translateY(-1px);
 }
 
 #emblem-bar .emblem:hover .ink,
 #emblem-bar .emblem.active .ink {
     background: var(--fill);
-    /* switch to item color */
-    filter: brightness(1.2) contrast(1.24) saturate(1.22) drop-shadow(0 0 10px var(--glow));
+    /* cambia a color del ítem */
     opacity: 1;
+    filter:
+        brightness(1.2) contrast(1.24) saturate(1.22) drop-shadow(0 0 10px var(--glow));
 }
 
 #emblem-bar .emblem:hover img,
@@ -132,68 +136,68 @@
 }
 
 /* =========================================================
-   5) ROLE COLORS (class on <li>)
+   5) ROLE COLORS (clase global en cualquier elemento)
    ---------------------------------------------------------
-   - Apply exactly one of these to each role item
+   - Aplica exactamente una por ítem
    ========================================================= */
-#emblem-bar .role-ass-melee {
+.role-ass-melee {
     --fill: var(--c-assmelee);
 }
 
-#emblem-bar .role-ass-range {
+.role-ass-range {
     --fill: var(--c-assranged);
 }
 
-#emblem-bar .role-healer {
+.role-healer {
     --fill: var(--c-healer);
 }
 
-#emblem-bar .role-support {
+.role-support {
     --fill: var(--c-support);
 }
 
-#emblem-bar .role-tank {
+.role-tank {
     --fill: var(--c-tank);
 }
 
-#emblem-bar .role-warrior {
+.role-warrior {
     --fill: var(--c-warrior);
 }
 
 /* =========================================================
-   6) UNIVERSE COLORS (class on <li>)
+   6) UNIVERSE COLORS (clase global en cualquier elemento)
    ---------------------------------------------------------
-   - Overwatch uses black+orange gradient
+   - Overwatch usa degradado negro+naranja
    ========================================================= */
-#emblem-bar .uni-diablo {
+.uni-diablo {
     --fill: var(--c-diablo);
 }
 
-#emblem-bar .uni-nexus {
+.uni-nexus {
     --fill: var(--c-nexus);
 }
 
-#emblem-bar .uni-overwatch {
+.uni-overwatch {
     --fill: var(--c-overwatch);
 }
 
-#emblem-bar .uni-starcraft {
+.uni-starcraft {
     --fill: var(--c-starcraft);
 }
 
-#emblem-bar .uni-warcraft {
+.uni-warcraft {
     --fill: var(--c-warcraft);
 }
 
 /* =========================================================
    7) RESPONSIVE
    ---------------------------------------------------------
-   - Scale icon size only (no global changes)
+   - Escala el tamaño de icono (no global)
    ========================================================= */
+#emblem-bar .emblem.uni-warcraft {
+    margin-inline-start: var(--group-gap);
+}
 
-   #emblem-bar .emblem.uni-warcraft {
-       margin-inline-start: var(--group-gap);
-   }
 @media (max-width: 1200px) {
     #emblem-bar {
         --size: 40px;
@@ -213,55 +217,73 @@
 }
 
 /* =========================================================
-   8) MASK SOURCES (CENTRALIZED)
+   8) MASK SOURCES (GLOBALES)
    ---------------------------------------------------------
-   - Set --mask per emblem class (relative to this CSS file)
-   - Remove inline style="--mask: …" from HTML items
+   - Define --mask por clase (rutas iguales a tus PNG)
+   - Elimina cualquier style="--mask: …" inline en HTML
    ========================================================= */
 
 /* Roles */
-#emblem-bar .role-tank {
+.role-tank {
     --mask: url('../../assets/icons/roles/01_tank-removebg-preview.png');
 }
 
-#emblem-bar .role-warrior {
+.role-warrior {
     --mask: url('../../assets/icons/roles/02_guerrero-removebg-preview.png');
 }
 
-#emblem-bar .role-ass-range {
+.role-ass-range {
     --mask: url('../../assets/icons/roles/03_distancia-removebg-preview.png');
 }
 
-#emblem-bar .role-ass-melee {
+.role-ass-melee {
     --mask: url('../../assets/icons/roles/04_mele-removebg-preview.png');
 }
 
-/* "mele" */
-#emblem-bar .role-healer {
+/* “mele” */
+.role-healer {
     --mask: url('../../assets/icons/roles/05_sanador-removebg-preview.png');
 }
 
-#emblem-bar .role-support {
+.role-support {
     --mask: url('../../assets/icons/roles/06_apoyo-removebg-preview.png');
 }
 
-/* Universes */
-#emblem-bar .uni-warcraft {
+/* Universos */
+.uni-warcraft {
     --mask: url('../../assets/icons/universes/07_warcraft-removebg-preview.png');
 }
 
-#emblem-bar .uni-starcraft {
+.uni-starcraft {
     --mask: url('../../assets/icons/universes/08_starcraft-removebg-preview.png');
 }
 
-#emblem-bar .uni-diablo {
+.uni-diablo {
     --mask: url('../../assets/icons/universes/09_diablo-removebg-preview.png');
 }
 
-#emblem-bar .uni-overwatch {
+.uni-overwatch {
     --mask: url('../../assets/icons/universes/10_overwatch-removebg-preview.png');
 }
 
-#emblem-bar .uni-nexus {
+.uni-nexus {
     --mask: url('../../assets/icons/universes/11_nexo-removebg-preview.png');
+}
+
+/* =========================================================
+   9) BADGE PARA EL POP-UP
+   ---------------------------------------------------------
+   - Iconito coloreado que reutiliza --fill + --mask
+   - Úsalo con: <span class="badge role-healer"></span> etc.
+   ========================================================= */
+.popover .badge {
+    display: inline-block;
+    inline-size: 28px;
+    block-size: 28px;
+    vertical-align: -6px;
+    background: var(--fill, #999);
+    -webkit-mask: var(--mask) center/contain no-repeat;
+    mask: var(--mask) center/contain no-repeat;
+    filter: drop-shadow(0 0 6px var(--glow-soft));
+    margin-inline-end: 8px;
 }
