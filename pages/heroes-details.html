@@ -27,17 +27,36 @@
 
 
 
-    <main id="main-content" tabindex="-1">
+<main id="main-content">
+    <div class="hero-banner" id="hero-banner">
+        <video id="hero-video" autoplay muted loop playsinline></video>
+        <img id="hero-image-fallback" alt="">
+    </div>
 
-        <h1>
-            Página en construcción...
-        </h1>
-    </main>
+    <header class="hero-head">
+        <h1 id="hero-name"></h1>
+        <p id="hero-sub"></p>
+        <div class="hero-meta">
+            <span id="hero-role"></span>
+            <span id="hero-universe"></span>
+            <span id="hero-rarity"></span>
+        </div>
+    </header>
+
+    <article class="hero-info">
+        <p id="hero-desc-text"></p>
+        <p id="hero-release"></p>
+        <div id="hero-prices"></div>
+    </article>
+</main>
+
 
 
     <footer id="site-footer"></footer>
 
-    <script type="module" src="../js/main.js"></script>
+<script type="module" src="../js/main.js"></script>
+<script type="module" src="../js/features/heroes-details.js"></script>
+
 </body>
 
 </html>

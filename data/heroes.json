@@ -1,13 +1,13 @@
 {
     "Abathur": {
         "id": 1,
+        "slug": "abathur",
         "name": "Abathur",
-        "short_name": "abathur",
         "alt_name": null,
-        "role": "Specialist",
-        "new_role": "Support",
-        "type": "Melee",
-        "release_date": "2014-03-13 00:00:00",
+        "role_legacy": "Specialist",
+        "role": "Support",
+        "attack_type": "Melee",
+        "release_date": "2014-03-13",
         "rework_date": null,
         "attribute_id": "Abat",
         "translations": [
@@ -18,18 +18,32 @@
             "아바투르"
         ],
         "universe": "StarCraft",
-        "portrait": "/assets/img/heroes/abathur.webp"
+        "images": {
+            "portrait": "/assets/img/heroes/abathur.webp",
+            "banner": "/assets/img/heroes/abathur.webm"
+        },
+        "media": {
+            "video_mp4": null,
+            "youtube_id": null
+        },
+        "wiki_page": "Abathur",
+        "rarity": null,
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        },
+        "tagline": null
     },
     "Alarak": {
         "id": 2,
+        "slug": "alarak",
         "name": "Alarak",
-        "short_name": "alarak",
         "alt_name": null,
-        "role": "Assassin",
-        "new_role": "Melee Assassin",
-        "type": "Melee",
-        "release_date": "2016-09-13 00:00:00",
-        "rework_date": "2017-05-16 00:00:00",
+        "role_legacy": "Assassin",
+        "role": "Melee Assassin",
+        "attack_type": "Melee",
+        "release_date": "2016-09-13",
+        "rework_date": "2017-05-16",
         "attribute_id": "Alar",
         "translations": [
             "alarak",
@@ -39,17 +53,31 @@
             "알라라크"
         ],
         "universe": "StarCraft",
-        "portrait": "/assets/img/heroes/alarak.webp"
+        "images": {
+            "portrait": "/assets/img/heroes/alarak.webp",
+            "banner": "/assets/img/heroes/alarak.webm"
+        },
+        "media": {
+            "video_mp4": null,
+            "youtube_id": null
+        },
+        "wiki_page": "Alarak",
+        "rarity": null,
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        },
+        "tagline": null
     },
     "Alexstrasza": {
         "id": 3,
+        "slug": "alexstrasza",
         "name": "Alexstrasza",
-        "short_name": "alexstrasza",
         "alt_name": null,
-        "role": "Support",
-        "new_role": "Healer",
-        "type": "Ranged",
-        "release_date": "2017-11-14 00:00:00",
+        "role_legacy": "Support",
+        "role": "Healer",
+        "attack_type": "Ranged",
+        "release_date": "2017-11-14",
         "rework_date": null,
         "attribute_id": "Alex",
         "translations": [
@@ -59,17 +87,31 @@
             "亞歷克絲塔莎"
         ],
         "universe": "Warcraft",
-        "portrait": "/assets/img/heroes/alexstrasza.webp"
+        "images": {
+            "portrait": "/assets/img/heroes/alexstrasza.webp",
+            "banner": "/assets/img/heroes/alexstrasza.webm"
+        },
+        "media": {
+            "video_mp4": null,
+            "youtube_id": null
+        },
+        "wiki_page": "Alexstrasza",
+        "rarity": null,
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        },
+        "tagline": null
     },
     "Ana": {
         "id": 4,
+        "slug": "ana",
         "name": "Ana",
-        "short_name": "ana",
         "alt_name": null,
-        "role": "Support",
-        "new_role": "Healer",
-        "type": "Ranged",
-        "release_date": "2017-09-26 00:00:00",
+        "role_legacy": "Support",
+        "role": "Healer",
+        "attack_type": "Ranged",
+        "release_date": "2017-09-26",
         "rework_date": null,
         "attribute_id": "Ana",
         "translations": [
@@ -78,17 +120,31 @@
             "아나"
         ],
         "universe": "Overwatch",
-        "portrait": "/assets/img/heroes/ana.webp"
+        "images": {
+            "portrait": "/assets/img/heroes/ana.webp",
+            "banner": "/assets/img/heroes/ana.webm"
+        },
+        "media": {
+            "video_mp4": null,
+            "youtube_id": null
+        },
+        "wiki_page": "Ana_(Overwatch)",
+        "rarity": null,
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        },
+        "tagline": null
     },
     "Anduin": {
         "id": 5,
+        "slug": "anduin",
         "name": "Anduin",
-        "short_name": "anduin",
         "alt_name": null,
-        "role": "Support",
-        "new_role": "Healer",
-        "type": "Ranged",
-        "release_date": "2019-05-02 00:00:00",
+        "role_legacy": "Support",
+        "role": "Healer",
+        "attack_type": "Ranged",
+        "release_date": "2019-05-02",
         "rework_date": null,
         "attribute_id": "Andu",
         "translations": [
@@ -97,39 +153,67 @@
             "安度因"
         ],
         "universe": "Warcraft",
-        "portrait": "/assets/img/heroes/anduin.webp"
+        "images": {
+            "portrait": "/assets/img/heroes/anduin.webp",
+            "banner": "/assets/img/heroes/anduin.webm"
+        },
+        "media": {
+            "video_mp4": null,
+            "youtube_id": null
+        },
+        "wiki_page": "Anduin_Wrynn_(Heroes_of_the_Storm)",
+        "rarity": null,
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        },
+        "tagline": null
     },
-    "Anub'arak": {
+    "Anubarak": {
         "id": 6,
-        "name": "Anub'arak",
-        "short_name": "anubarak",
+        "slug": "anubarak",
+        "name": "Anubarak",
         "alt_name": "Anubarak",
-        "role": "Warrior",
-        "new_role": "Tank",
-        "type": "Melee",
-        "release_date": "2014-10-07 00:00:00",
-        "rework_date": "2017-03-14 00:00:00",
+        "role_legacy": "Warrior",
+        "role": "Tank",
+        "attack_type": "Melee",
+        "release_date": "2014-10-07",
+        "rework_date": "2017-03-14",
         "attribute_id": "Anub",
         "translations": [
-            "Anub’arak",
-            "anub'arak",
+            "Anubarak",
+            "anubarak",
             "ануб'арак",
             "阿努巴拉克",
             "아눕아락"
         ],
         "universe": "Warcraft",
-        "portrait": "/assets/img/heroes/anubarak.webp"
+        "images": {
+            "portrait": "/assets/img/heroes/anubarak.webp",
+            "banner": "/assets/img/heroes/anubarak.webm"
+        },
+        "media": {
+            "video_mp4": null,
+            "youtube_id": null
+        },
+        "wiki_page": "Anubarak",
+        "rarity": null,
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        },
+        "tagline": null
     },
     "Artanis": {
         "id": 7,
+        "slug": "artanis",
         "name": "Artanis",
-        "short_name": "artanis",
         "alt_name": null,
-        "role": "Warrior",
-        "new_role": "Bruiser",
-        "type": "Melee",
-        "release_date": "2015-10-20 00:00:00",
-        "rework_date": "2016-12-14 00:00:00",
+        "role_legacy": "Warrior",
+        "role": "Bruiser",
+        "attack_type": "Melee",
+        "release_date": "2015-10-20",
+        "rework_date": "2016-12-14",
         "attribute_id": "Arts",
         "translations": [
             "artanis",
@@ -139,18 +223,32 @@
             "아르타니스"
         ],
         "universe": "StarCraft",
-        "portrait": "/assets/img/heroes/artanis.webp"
+        "images": {
+            "portrait": "/assets/img/heroes/artanis.webp",
+            "banner": "/assets/img/heroes/artanis.webm"
+        },
+        "media": {
+            "video_mp4": null,
+            "youtube_id": null
+        },
+        "wiki_page": "Artanis_(Heroes_of_the_Storm)",
+        "rarity": null,
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        },
+        "tagline": null
     },
     "Arthas": {
         "id": 8,
+        "slug": "arthas",
         "name": "Arthas",
-        "short_name": "arthas",
         "alt_name": null,
-        "role": "Warrior",
-        "new_role": "Tank",
-        "type": "Melee",
-        "release_date": "2014-03-13 00:00:00",
-        "rework_date": "2017-03-14 00:00:00",
+        "role_legacy": "Warrior",
+        "role": "Tank",
+        "attack_type": "Melee",
+        "release_date": "2014-03-13",
+        "rework_date": "2017-03-14",
         "attribute_id": "Arth",
         "translations": [
             "arthas",
@@ -160,6 +258,21 @@
             "아서스"
         ],
         "universe": "Warcraft",
-        "portrait": "/assets/img/heroes/arthas.webp"
+        "images": {
+            "portrait": "/assets/img/heroes/arthas.webp",
+            "banner": "/assets/img/heroes/arthas.webm"
+        },
+        "media": {
+            "video_mp4": null,
+            "youtube_id": null
+        },
+        "wiki_page": "Arthas",
+        "rarity": null,
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        },
+        "tagline": null
     }
 }
+ 

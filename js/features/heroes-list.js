@@ -232,7 +232,7 @@ function renderGrid(items) {
         card.dataset.universe = hero.universe;
         card.dataset.id = String(hero.id);
         card.dataset.role = hero.new_role || hero.role;
-        
+        card.dataset.slug = hero.slug || hero.short_name || (hero.name ?? '').toLowerCase();
 
         const img = document.createElement('img');
         img.alt = '';
@@ -243,16 +243,17 @@ function renderGrid(items) {
         img.sizes = '(max-width: 720px) 50vw, 25vw';
         card.append(img);
 
+        const go = () => goToDetails(hero);  // 👈 ahora pasamos el objeto completo
+
         if (IS_TOUCH) {
-            // En mobile: ir directo al detalle
-            card.addEventListener('click', () => goToDetails(hero.id));
+            card.addEventListener('click', go);
         } else {
             attachPopover(card, hero);
-            card.addEventListener('click', () => goToDetails(hero.id));
+            card.addEventListener('click', go);
             card.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    goToDetails(hero.id);
+                    go();
                 }
             });
         }
@@ -262,6 +263,7 @@ function renderGrid(items) {
 
     $.grid.append(frag);
 }
+
 
 function renderSkeletons(n) {
     $.grid.setAttribute('aria-busy', 'true');
@@ -292,10 +294,12 @@ function showError(err) {
 /* =========================================================
    5) NAV
    ========================================================= */
-function goToDetails(id) {
-    const url = DataConfig.joinPublic(`/pages/heroes-details.html?id=${encodeURIComponent(id)}`);
+function goToDetails(hero) {
+    const slug = hero.slug || hero.short_name || String(hero.id);
+    const url = DataConfig.joinPublic(`/pages/heroes-details.html?slug=${encodeURIComponent(slug)}`);
     window.location.assign(url);
 }
+
 
 /* =========================================================
    6) DESKTOP POPOVER
