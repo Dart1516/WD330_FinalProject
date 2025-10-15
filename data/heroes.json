@@ -19,8 +19,8 @@
         ],
         "universe": "StarCraft",
         "images": {
-            "portrait": "/assets/img/heroes/abathur.webp",
-            "banner": "/assets/img/heroes/abathur.webm"
+            "portrait": "assets/img/heroes/abathur.webp",
+            "banner": "assets/img/heroes/abathur.webm"
         },
         "media": {
             "video_mp4": null,
@@ -54,8 +54,8 @@
         ],
         "universe": "StarCraft",
         "images": {
-            "portrait": "/assets/img/heroes/alarak.webp",
-            "banner": "/assets/img/heroes/alarak.webm"
+            "portrait": "assets/img/heroes/alarak.webp",
+            "banner": "assets/img/heroes/alarak.webm"
         },
         "media": {
             "video_mp4": null,
@@ -88,8 +88,8 @@
         ],
         "universe": "Warcraft",
         "images": {
-            "portrait": "/assets/img/heroes/alexstrasza.webp",
-            "banner": "/assets/img/heroes/alexstrasza.webm"
+            "portrait": "assets/img/heroes/alexstrasza.webp",
+            "banner": "assets/img/heroes/alexstrasza.webm"
         },
         "media": {
             "video_mp4": null,
@@ -121,8 +121,8 @@
         ],
         "universe": "Overwatch",
         "images": {
-            "portrait": "/assets/img/heroes/ana.webp",
-            "banner": "/assets/img/heroes/ana.webm"
+            "portrait": "assets/img/heroes/ana.webp",
+            "banner": "assets/img/heroes/ana.webm"
         },
         "media": {
             "video_mp4": null,
@@ -154,8 +154,8 @@
         ],
         "universe": "Warcraft",
         "images": {
-            "portrait": "/assets/img/heroes/anduin.webp",
-            "banner": "/assets/img/heroes/anduin.webm"
+            "portrait": "assets/img/heroes/anduin.webp",
+            "banner": "assets/img/heroes/anduin.webm"
         },
         "media": {
             "video_mp4": null,
@@ -189,8 +189,8 @@
         ],
         "universe": "Warcraft",
         "images": {
-            "portrait": "/assets/img/heroes/anubarak.webp",
-            "banner": "/assets/img/heroes/anubarak.webm"
+            "portrait": "assets/img/heroes/anubarak.webp",
+            "banner": "assets/img/heroes/anubarak.webm"
         },
         "media": {
             "video_mp4": null,
@@ -224,8 +224,8 @@
         ],
         "universe": "StarCraft",
         "images": {
-            "portrait": "/assets/img/heroes/artanis.webp",
-            "banner": "/assets/img/heroes/artanis.webm"
+            "portrait": "assets/img/heroes/artanis.webp",
+            "banner": "assets/img/heroes/artanis.webm"
         },
         "media": {
             "video_mp4": null,
@@ -259,8 +259,8 @@
         ],
         "universe": "Warcraft",
         "images": {
-            "portrait": "/assets/img/heroes/arthas.webp",
-            "banner": "/assets/img/heroes/arthas.webm"
+            "portrait": "assets/img/heroes/arthas.webp",
+            "banner": "assets/img/heroes/arthas.webm"
         },
         "media": {
             "video_mp4": null,
