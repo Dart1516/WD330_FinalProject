@@ -1,6 +1,3 @@
-// js/features/heroes-details.js
-// All comments in English.
-
 import { getAllHeroes, DataConfig } from './heroes-data.js';
 import { getHeroDescription } from '../utils/wiki.js';
 
@@ -28,26 +25,15 @@ document.addEventListener('DOMContentLoaded', init);
 
 async function init() {
     try {
-        // Load all heroes
         const heroes = await getAllHeroes(DataConfig.LocalFirst);
-
-        // Get slug from URL (?slug=abathur)
         const slug = getParam('slug');
-        if (!slug) {
-            console.error('Missing ?slug parameter');
-            return;
-        }
+        if (!slug) return;
 
-        // Find hero by slug, short_name, or id
         const hero = heroes.find(
-            (h) =>
-                h.slug === slug ||
-                h.short_name === slug ||
-                String(h.id) === slug
+            (h) => h.slug === slug || h.short_name === slug || String(h.id) === slug
         );
 
         if (!hero) {
-            console.error('Hero not found for slug:', slug);
             showErrorState();
             return;
         }
@@ -60,48 +46,52 @@ async function init() {
 }
 
 /* =========================================================
-   3) RENDER FUNCTIONS
+   3) HELPERS
+   ========================================================= */
+function resolveAsset(p) {
+    if (!p) return '';
+    if (/^https?:\/\//.test(p)) return p;
+    const repo = location.hostname.endsWith('github.io')
+        ? location.pathname.split('/')[1]
+        : '';
+    const base = repo ? `/${repo}/` : '/';
+    return p.startsWith('/') ? base + p.slice(1) : base + p;
+}
+
+/* =========================================================
+   4) RENDER FUNCTIONS
    ========================================================= */
 function renderHero(hero) {
-    // ---------- Banner ----------
-    const banner = hero.images?.banner;
-    const portrait = hero.images?.portrait;
+    const bannerUrl = resolveAsset(hero.images?.banner);
+    const portraitUrl = resolveAsset(hero.images?.portrait);
 
-    // Reset sources
     $.video.innerHTML = '';
     $.video.removeAttribute('src');
 
-    if (banner && banner.endsWith('.webm')) {
-        // Use video banner
+    if (bannerUrl && bannerUrl.endsWith('.webm')) {
         const source = document.createElement('source');
-        source.src = banner;
+        source.src = bannerUrl;
         source.type = 'video/webm';
         $.video.appendChild(source);
         $.video.style.display = 'block';
         $.img.style.display = 'none';
         $.video.load();
     } else {
-        // Fallback to static image
-        $.img.src = banner || portrait || '';
+        $.img.src = bannerUrl || portraitUrl || '';
         $.img.alt = `Imagen de ${hero.name}`;
         $.img.style.display = 'block';
         $.video.style.display = 'none';
     }
 
-    // ---------- Header data ----------
     $.name.textContent = hero.name || 'Nombre no disponible';
-    $.sub.textContent = hero.tagline || ''; // optional
+    $.sub.textContent = hero.tagline || '';
     $.role.textContent = hero.role || '';
     $.universe.textContent = hero.universe || '';
     $.rarity.textContent = hero.rarity || '';
 
-    // ---------- Release ----------
     const release = hero.release_date || hero.releaseDate;
-    if (release) {
-        $.release.textContent = `Fecha de lanzamiento: ${release.slice(0, 10)}`;
-    }
+    if (release) $.release.textContent = `Fecha de lanzamiento: ${release.slice(0, 10)}`;
 
-    // ---------- Prices ----------
     if (hero.prices) {
         $.prices.innerHTML = `
       ${hero.prices.gold ? `<span>🪙 ${hero.prices.gold}</span>` : ''}
@@ -109,7 +99,6 @@ function renderHero(hero) {
     `;
     }
 
-    // ---------- Description ----------
     $.desc.textContent = 'Cargando descripción…';
     getHeroDescription(hero).then((text) => {
         $.desc.textContent = text || 'Descripción no disponible por ahora.';
@@ -117,7 +106,7 @@ function renderHero(hero) {
 }
 
 /* =========================================================
-   4) UTILS
+   5) UTILS
    ========================================================= */
 function getParam(name) {
     const url = new URL(window.location.href);
