@@ -1,12 +1,5 @@
-// js/features/heroes-list.js
-// All comments in English. Sections ordered alphabetically (A, B, C...).
 
 import { getAllHeroes, DataConfig } from './heroes-data.js';
-import {
-    getOriginalImagesForTitles,
-    getThumbnailsForTitles,
-    normalizeWikiTitle,
-} from '../utils/wiki.js';
 
 /* =========================================================
    A) CONSTANTS & MAPPINGS
@@ -81,11 +74,21 @@ async function boot() {
     bindSheet();
 
     try {
-        // Load local heroes (or LocalFirst per your data layer)
+        // 1) Load heroes (API or local) via data layer.
         state.all = await getAllHeroes();
 
-        // Hydrate heroes with Fandom images (original -> thumbnail fallback)
-        await hydrateImagesFromFandom(state.all);
+        // 2) Ensure universe is correct (overwrite from local JSON).
+        await hydrateUniversesFromLocal(state.all);
+
+        // 3) Attach local portrait path based on slug.
+        state.all.forEach((h) => {
+            const slug = h.slug || (h.name ?? '').toLowerCase().replace(/\s+/g, '-');
+            h.slug = slug;
+            h.portrait = `/assets/img/heroes/${slug}.webp`;
+        });
+
+        // Debug (optional): confirm distinct universes after hydration.
+        // console.debug('[heroes-list] universes seen:', [...new Set(state.all.map(h => h.universe))]);
     } catch (err) {
         showError(err);
         return;
@@ -96,7 +99,52 @@ async function boot() {
 }
 
 /* =========================================================
-   C) BINDINGS: FILTERS & SEARCH
+   C) DATA HYDRATION (UNIVERSES FROM LOCAL JSON)
+   ========================================================= */
+async function hydrateUniversesFromLocal(list) {
+    const url = DataConfig.joinPublic('/data/heroes.json');
+
+    try {
+        const res = await fetch(url, { credentials: 'omit' });
+        if (!res.ok) {
+            console.warn('[heroes-list] universe JSON not found:', res.status, url);
+            return;
+        }
+
+        /** Shape: { "Abathur": { slug, universe, wiki_page, ... }, ... } */
+        const data = await res.json();
+
+        // Build a tolerant lookup (by slug, name, and wiki_page).
+        const uniMap = new Map();
+        for (const [name, h] of Object.entries(data || {})) {
+            if (!h) continue;
+            const uni = String(h.universe || 'Nexus').trim();
+            if (h.slug) uniMap.set(String(h.slug).toLowerCase(), uni);
+            if (name) uniMap.set(String(name).toLowerCase(), uni);
+            if (h.wiki_page) uniMap.set(String(h.wiki_page).toLowerCase(), uni);
+        }
+
+        // Overwrite each hero's universe using the most reliable key available.
+        list.forEach((h) => {
+            const slugKey = String(h.slug || h.short_name || '').toLowerCase();
+            const nameKey = String(h.name || '').toLowerCase();
+            const wikiKey = String(h.wiki_page || '').toLowerCase();
+
+            const patched =
+                uniMap.get(slugKey) ||
+                uniMap.get(nameKey) ||
+                (wikiKey && uniMap.get(wikiKey)) ||
+                h.universe || 'Nexus';
+
+            h.universe = patched;
+        });
+    } catch (e) {
+        console.warn('[heroes-list] failed to hydrate universes from local JSON', e);
+    }
+}
+
+/* =========================================================
+   D) BINDINGS (FILTERS & SEARCH)
    ========================================================= */
 function bindFilterChips() {
     if (!$.emblemBar) return;
@@ -163,7 +211,7 @@ function bindClear() {
 }
 
 /* =========================================================
-   D) FILTERS: APPLY & HELPERS
+   E) FILTERS (APPLY & HELPERS)
    ========================================================= */
 function applyFilters() {
     const q = state.text.toLowerCase();
@@ -174,17 +222,29 @@ function applyFilters() {
             const hay = `${h.name} ${h.alt_name ?? ''} ${h.short_name ?? ''}`.toLowerCase();
             if (!hay.includes(q)) return false;
         }
-        // Roles (OR). If hero role is "Assassin", accept Melee/Ranged Assassin selections as well.
+
+        // Roles (OR). Accept umbrella cases.
         if (state.roles.size) {
-            const heroRole = h.new_role || h.role;
+            const heroRole = String(h.new_role || h.role || '').trim();
+
+            const selected = [...state.roles];
             const roleOk =
-                state.roles.has(heroRole) ||
-                (heroRole === 'Assassin' &&
-                    (state.roles.has('Melee Assassin') || state.roles.has('Ranged Assassin')));
+                selected.some(r => r.toLowerCase().trim() === heroRole.toLowerCase()) ||
+                (heroRole === 'Assassin' && (selected.includes('Melee Assassin') || selected.includes('Ranged Assassin'))) ||
+                (heroRole === 'Warrior' && (selected.includes('Tank') || selected.includes('Bruiser'))) ||
+                (selected.includes('Assassin') && (heroRole === 'Melee Assassin' || heroRole === 'Ranged Assassin')) ||
+                (selected.includes('Warrior') && (heroRole === 'Tank' || heroRole === 'Bruiser'));
+
             if (!roleOk) return false;
         }
-        // Universe (OR)
-        if (state.universes.size && !state.universes.has(h.universe)) return false;
+
+        // Universes (OR)
+        if (state.universes.size) {
+            const heroUni = String(h.universe || '').trim().toLowerCase();
+            const uniOk = [...state.universes].some(u => u.toLowerCase().trim() === heroUni);
+            if (!uniOk) return false;
+        }
+
         return true;
     });
 
@@ -218,7 +278,7 @@ function toggle(btn, set, value) {
 }
 
 /* =========================================================
-   E) GRID RENDER
+   F) GRID (RENDER)
    ========================================================= */
 function renderGrid(items) {
     $.grid.setAttribute('aria-busy', 'false');
@@ -240,9 +300,9 @@ function renderGrid(items) {
         card.dataset.role = hero.new_role || hero.role;
         card.dataset.slug = hero.slug || hero.short_name || (hero.name ?? '').toLowerCase();
 
-        // --- Image choice: Fandom original/thumbnail -> local portrait -> placeholder
+        // Image (local)
         const img = document.createElement('img');
-        img.alt = '';
+        img.alt = hero.name || '';
         img.loading = 'lazy';
         img.decoding = 'async';
 
@@ -251,16 +311,14 @@ function renderGrid(items) {
             hero.images?.portrait ||
             `/assets/img/heroes/${hero.slug}.webp`;
 
-        const chosen = hero.fandom_image || localPortrait;
-
-        img.src = chosen;
-        img.srcset = `${chosen} 1x`;
+        img.src = localPortrait;
+        img.srcset = `${localPortrait} 1x`;
         img.sizes = '(max-width: 720px) 50vw, 25vw';
         img.onerror = () => { img.src = '/assets/img/heroes/placeholder.webp'; };
 
         card.append(img);
 
-        // --- Events
+        // Navigation
         const go = () => goToDetails(hero);
 
         if (IS_TOUCH) {
@@ -303,7 +361,7 @@ function updateCount(n) {
 }
 
 /* =========================================================
-   F) NAVIGATION
+   G) NAVIGATION
    ========================================================= */
 function goToDetails(hero) {
     const slug = hero.slug || hero.short_name || String(hero.id);
@@ -312,7 +370,7 @@ function goToDetails(hero) {
 }
 
 /* =========================================================
-   G) POPOVER (DESKTOP)
+   H) POPOVER (DESKTOP)
    ========================================================= */
 function attachPopover(card, hero) {
     let timer = 0;
@@ -374,7 +432,7 @@ function placePopover(pop, card) {
 }
 
 /* =========================================================
-   H) SHEET (MOBILE)
+   I) SHEET (MOBILE)
    ========================================================= */
 function bindSheet() {
     if (!$.sheet) return;
@@ -385,7 +443,7 @@ function bindSheet() {
 }
 
 /* =========================================================
-   I) UTILS (ICONS & ESCAPERS)
+   J) UTILS (ICONS & ESCAPERS)
    ========================================================= */
 function iconRole(role) {
     const cls = ROLE_CLASS_BY_TOKEN[role] || 'role-ass-melee';
@@ -407,26 +465,10 @@ function escapeHTML(s) {
 }
 
 /* =========================================================
-   J) WIKI: FANDOM IMAGES HYDRATION
+   K) ERROR STATE
    ========================================================= */
-async function hydrateImagesFromFandom(list) {
-    const titles = list
-        .map(h => normalizeWikiTitle(h.wiki_page || h.name))
-        .filter(Boolean);
-
-    // 1) Try originals (large)
-    const originals = await getOriginalImagesForTitles(titles);
-
-    // 2) Missing originals -> try thumbnails
-    const missing = titles.filter(t => !originals[t]);
-    let thumbs = {};
-    if (missing.length) {
-        thumbs = await getThumbnailsForTitles(missing, 480);
-    }
-
-    // 3) Attach to hero objects (as `fandom_image`)
-    for (const hero of list) {
-        const t = normalizeWikiTitle(hero.wiki_page || hero.name);
-        hero.fandom_image = originals[t] || thumbs[t] || '';
-    }
+function showError(err) {
+    console.error(err);
+    $.grid.innerHTML = '';
+    if ($.tplError) $.grid.append($.tplError.content.cloneNode(true));
 }

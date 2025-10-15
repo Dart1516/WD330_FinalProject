@@ -1,277 +1,1159 @@
-{
+ {
     "Abathur": {
         "id": 1,
         "slug": "abathur",
         "name": "Abathur",
-        "alt_name": null,
-        "role_legacy": "Specialist",
-        "role": "Support",
-        "attack_type": "Melee",
-        "release_date": "2014-03-13",
-        "rework_date": null,
-        "attribute_id": "Abat",
-        "translations": [
-            "abathur",
-            "abatur",
-            "абатур",
-            "阿巴瑟",
-            "아바투르"
-        ],
+        "role_legacy": null,
+        "role": null,
         "universe": "StarCraft",
-        "images": {
-            "portrait": "/assets/img/heroes/abathur.webp",
-            "banner": "/assets/img/heroes/abathur.webm"
-        },
-        "media": {
-            "video_mp4": null,
-            "youtube_id": null
-        },
         "wiki_page": "Abathur",
-        "rarity": null,
         "prices": {
             "gold": 7000,
             "gems": 625
-        },
-        "tagline": null
+        }
     },
     "Alarak": {
         "id": 2,
         "slug": "alarak",
         "name": "Alarak",
-        "alt_name": null,
-        "role_legacy": "Assassin",
-        "role": "Melee Assassin",
-        "attack_type": "Melee",
-        "release_date": "2016-09-13",
-        "rework_date": "2017-05-16",
-        "attribute_id": "Alar",
-        "translations": [
-            "alarak",
-            "аларак",
-            "亞拉瑞克",
-            "阿拉纳克",
-            "알라라크"
-        ],
+        "role_legacy": null,
+        "role": null,
         "universe": "StarCraft",
-        "images": {
-            "portrait": "/assets/img/heroes/alarak.webp",
-            "banner": "/assets/img/heroes/alarak.webm"
-        },
-        "media": {
-            "video_mp4": null,
-            "youtube_id": null
-        },
         "wiki_page": "Alarak",
-        "rarity": null,
         "prices": {
-            "gold": 7000,
-            "gems": 625
-        },
-        "tagline": null
+            "gold": 10000,
+            "gems": 750
+        }
     },
     "Alexstrasza": {
         "id": 3,
         "slug": "alexstrasza",
         "name": "Alexstrasza",
-        "alt_name": null,
-        "role_legacy": "Support",
-        "role": "Healer",
-        "attack_type": "Ranged",
-        "release_date": "2017-11-14",
-        "rework_date": null,
-        "attribute_id": "Alex",
-        "translations": [
-            "alexstrasza",
-            "알렉스트라자",
-            "阿莱克丝塔萨",
-            "亞歷克絲塔莎"
-        ],
+        "role_legacy": null,
+        "role": null,
         "universe": "Warcraft",
-        "images": {
-            "portrait": "/assets/img/heroes/alexstrasza.webp",
-            "banner": "/assets/img/heroes/alexstrasza.webm"
-        },
-        "media": {
-            "video_mp4": null,
-            "youtube_id": null
-        },
         "wiki_page": "Alexstrasza",
-        "rarity": null,
         "prices": {
-            "gold": 7000,
-            "gems": 625
-        },
-        "tagline": null
+            "gold": 10000,
+            "gems": 750
+        }
     },
     "Ana": {
         "id": 4,
         "slug": "ana",
         "name": "Ana",
-        "alt_name": null,
-        "role_legacy": "Support",
-        "role": "Healer",
-        "attack_type": "Ranged",
-        "release_date": "2017-09-26",
-        "rework_date": null,
-        "attribute_id": "Ana",
-        "translations": [
-            "ana",
-            "安娜",
-            "아나"
-        ],
+        "role_legacy": null,
+        "role": null,
         "universe": "Overwatch",
-        "images": {
-            "portrait": "/assets/img/heroes/ana.webp",
-            "banner": "/assets/img/heroes/ana.webm"
-        },
-        "media": {
-            "video_mp4": null,
-            "youtube_id": null
-        },
         "wiki_page": "Ana",
-        "rarity": null,
         "prices": {
             "gold": 7000,
             "gems": 625
-        },
-        "tagline": null
+        }
     },
     "Anduin": {
         "id": 5,
         "slug": "anduin",
         "name": "Anduin",
-        "alt_name": null,
-        "role_legacy": "Support",
-        "role": "Healer",
-        "attack_type": "Ranged",
-        "release_date": "2019-05-02",
-        "rework_date": null,
-        "attribute_id": "Andu",
-        "translations": [
-            "anduin",
-            "안두인",
-            "安度因"
-        ],
+        "role_legacy": null,
+        "role": null,
         "universe": "Warcraft",
-        "images": {
-            "portrait": "/assets/img/heroes/anduin.webp",
-            "banner": "/assets/img/heroes/anduin.webm"
-        },
-        "media": {
-            "video_mp4": null,
-            "youtube_id": null
-        },
         "wiki_page": "Anduin",
-        "rarity": null,
         "prices": {
-            "gold": 7000,
-            "gems": 625
-        },
-        "tagline": null
+            "gold": 10000,
+            "gems": 750
+        }
     },
-    "Anubarak": {
+    "Anub'arak": {
         "id": 6,
         "slug": "anubarak",
-        "name": "Anubarak",
-        "alt_name": null,
-        "role_legacy": "Warrior",
-        "role": "Tank",
-        "attack_type": "Melee",
-        "release_date": "2014-10-07",
-        "rework_date": "2017-03-14",
-        "attribute_id": "Anub",
-        "translations": [
-            "Anubarak",
-            "anubarak",
-            "ануб'арак",
-            "阿努巴拉克",
-            "아눕아락"
-        ],
+        "name": "Anub'arak",
+        "role_legacy": null,
+        "role": null,
         "universe": "Warcraft",
-        "images": {
-            "portrait": "/assets/img/heroes/anubarak.webp",
-            "banner": "/assets/img/heroes/anubarak.webm"
-        },
-        "media": {
-            "video_mp4": null,
-            "youtube_id": null
-        },
         "wiki_page": "Anub'arak",
-        "rarity": null,
         "prices": {
-            "gold": 7000,
-            "gems": 625
-        },
-        "tagline": null
+            "gold": 4000,
+            "gems": 500
+        }
     },
     "Artanis": {
         "id": 7,
         "slug": "artanis",
         "name": "Artanis",
-        "alt_name": null,
-        "role_legacy": "Warrior",
-        "role": "Bruiser",
-        "attack_type": "Melee",
-        "release_date": "2015-10-20",
-        "rework_date": "2016-12-14",
-        "attribute_id": "Arts",
-        "translations": [
-            "artanis",
-            "артанис",
-            "亞坦尼斯",
-            "阿塔尼斯",
-            "아르타니스"
-        ],
+        "role_legacy": null,
+        "role": null,
         "universe": "StarCraft",
-        "images": {
-            "portrait": "/assets/img/heroes/artanis.webp",
-            "banner": "/assets/img/heroes/artanis.webm"
-        },
-        "media": {
-            "video_mp4": null,
-            "youtube_id": null
-        },
         "wiki_page": "Artanis",
-        "rarity": null,
         "prices": {
-            "gold": 7000,
-            "gems": 625
-        },
-        "tagline": null
+            "gold": 10000,
+            "gems": 750
+        }
     },
     "Arthas": {
         "id": 8,
         "slug": "arthas",
         "name": "Arthas",
-        "alt_name": null,
-        "role_legacy": "Warrior",
-        "role": "Tank",
-        "attack_type": "Melee",
-        "release_date": "2014-03-13",
-        "rework_date": "2017-03-14",
-        "attribute_id": "Arth",
-        "translations": [
-            "arthas",
-            "артас",
-            "阿尔萨斯",
-            "阿薩斯",
-            "아서스"
-        ],
+        "role_legacy": null,
+        "role": null,
         "universe": "Warcraft",
-        "images": {
-            "portrait": "/assets/img/heroes/arthas.webp",
-            "banner": "/assets/img/heroes/arthas.webm"
-        },
-        "media": {
-            "video_mp4": null,
-            "youtube_id": null
-        },
         "wiki_page": "Arthas",
-        "rarity": null,
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Auriel": {
+        "id": 9,
+        "slug": "auriel",
+        "name": "Auriel",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Auriel",
         "prices": {
             "gold": 7000,
             "gems": 625
-        },
-        "tagline": null
+        }
+    },
+    "Azmodan": {
+        "id": 10,
+        "slug": "azmodan",
+        "name": "Azmodan",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Azmodan",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Blaze": {
+        "id": 11,
+        "slug": "blaze",
+        "name": "Blaze",
+        "role_legacy": null,
+        "role": null,
+        "universe": "StarCraft",
+        "wiki_page": "Blaze",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Brightwing": {
+        "id": 12,
+        "slug": "brightwing",
+        "name": "Brightwing",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Brightwing",
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Cassia": {
+        "id": 13,
+        "slug": "cassia",
+        "name": "Cassia",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Cassia",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Chen": {
+        "id": 14,
+        "slug": "chen",
+        "name": "Chen",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Chen",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Cho": {
+        "id": 15,
+        "slug": "cho",
+        "name": "Cho",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Cho'gall",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Chromie": {
+        "id": 16,
+        "slug": "chromie",
+        "name": "Chromie",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Chromie",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "D.Va": {
+        "id": 17,
+        "slug": "dva",
+        "name": "D.Va",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Overwatch",
+        "wiki_page": "D.Va",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Deathwing": {
+        "id": 18,
+        "slug": "deathwing",
+        "name": "Deathwing",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Deathwing",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Deckard": {
+        "id": 19,
+        "slug": "deckard",
+        "name": "Deckard",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Deckard Cain",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Dehaka": {
+        "id": 20,
+        "slug": "dehaka",
+        "name": "Dehaka",
+        "role_legacy": null,
+        "role": null,
+        "universe": "StarCraft",
+        "wiki_page": "Dehaka",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Diablo": {
+        "id": 21,
+        "slug": "diablo",
+        "name": "Diablo",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Diablo",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "E.T.C.": {
+        "id": 22,
+        "slug": "etc",
+        "name": "E.T.C.",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "E.T.C.",
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Falstad": {
+        "id": 23,
+        "slug": "falstad",
+        "name": "Falstad",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Falstad",
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Fenix": {
+        "id": 24,
+        "slug": "fenix",
+        "name": "Fenix",
+        "role_legacy": null,
+        "role": null,
+        "universe": "StarCraft",
+        "wiki_page": "Fenix",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Gall": {
+        "id": 25,
+        "slug": "gall",
+        "name": "Gall",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Cho'gall",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Garrosh": {
+        "id": 26,
+        "slug": "garrosh",
+        "name": "Garrosh",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Garrosh Hellscream",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Gazlowe": {
+        "id": 27,
+        "slug": "gazlowe",
+        "name": "Gazlowe",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Gazlowe",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Genji": {
+        "id": 28,
+        "slug": "genji",
+        "name": "Genji",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Overwatch",
+        "wiki_page": "Genji",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Greymane": {
+        "id": 29,
+        "slug": "greymane",
+        "name": "Greymane",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Genn Greymane",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Gul'dan": {
+        "id": 30,
+        "slug": "guldan",
+        "name": "Gul'dan",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Gul'dan",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Hanzo": {
+        "id": 31,
+        "slug": "hanzo",
+        "name": "Hanzo",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Overwatch",
+        "wiki_page": "Hanzo",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Hogger": {
+        "id": 32,
+        "slug": "hogger",
+        "name": "Hogger",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Hogger",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Illidan": {
+        "id": 33,
+        "slug": "illidan",
+        "name": "Illidan",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Illidan",
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Imperius": {
+        "id": 34,
+        "slug": "imperius",
+        "name": "Imperius",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Imperius",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Jaina": {
+        "id": 35,
+        "slug": "jaina",
+        "name": "Jaina",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Jaina Proudmoore",
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Johanna": {
+        "id": 36,
+        "slug": "johanna",
+        "name": "Johanna",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Johanna",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Junkrat": {
+        "id": 37,
+        "slug": "junkrat",
+        "name": "Junkrat",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Overwatch",
+        "wiki_page": "Junkrat",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Kael'thas": {
+        "id": 38,
+        "slug": "kaelthas",
+        "name": "Kael'thas",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Kael'thas",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Kel'Thuzad": {
+        "id": 39,
+        "slug": "kelthuzad",
+        "name": "Kel'Thuzad",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Kel'Thuzad",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Kerrigan": {
+        "id": 40,
+        "slug": "kerrigan",
+        "name": "Kerrigan",
+        "role_legacy": null,
+        "role": null,
+        "universe": "StarCraft",
+        "wiki_page": "Sarah Kerrigan",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Kharazim": {
+        "id": 41,
+        "slug": "kharazim",
+        "name": "Kharazim",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Kharazim",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Leoric": {
+        "id": 42,
+        "slug": "leoric",
+        "name": "Leoric",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Leoric",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Li Li": {
+        "id": 43,
+        "slug": "li-li",
+        "name": "Li Li",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Li Li",
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Li-Ming": {
+        "id": 44,
+        "slug": "li-ming",
+        "name": "Li-Ming",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Li-Ming",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Lt. Morales": {
+        "id": 45,
+        "slug": "lt-morales",
+        "name": "Lt. Morales",
+        "role_legacy": null,
+        "role": null,
+        "universe": "StarCraft",
+        "wiki_page": "Lt. Morales",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Lúcio": {
+        "id": 46,
+        "slug": "lucio",
+        "name": "Lúcio",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Overwatch",
+        "wiki_page": "Lúcio",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Lunara": {
+        "id": 47,
+        "slug": "lunara",
+        "name": "Lunara",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Lunara",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Maiev": {
+        "id": 48,
+        "slug": "maiev",
+        "name": "Maiev",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Maiev Shadowsong",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Mal'Ganis": {
+        "id": 49,
+        "slug": "malganis",
+        "name": "Mal'Ganis",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Mal'Ganis",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Malfurion": {
+        "id": 50,
+        "slug": "malfurion",
+        "name": "Malfurion",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Malfurion Stormrage",
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Malthael": {
+        "id": 51,
+        "slug": "malthael",
+        "name": "Malthael",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Malthael",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Medivh": {
+        "id": 52,
+        "slug": "medivh",
+        "name": "Medivh",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Medivh",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Mephisto": {
+        "id": 53,
+        "slug": "mephisto",
+        "name": "Mephisto",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Mephisto",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Muradin": {
+        "id": 54,
+        "slug": "muradin",
+        "name": "Muradin",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Muradin Bronzebeard",
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Murky": {
+        "id": 55,
+        "slug": "murky",
+        "name": "Murky",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Murky",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Nazeebo": {
+        "id": 56,
+        "slug": "nazeebo",
+        "name": "Nazeebo",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Nazeebo",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Nova": {
+        "id": 57,
+        "slug": "nova",
+        "name": "Nova",
+        "role_legacy": null,
+        "role": null,
+        "universe": "StarCraft",
+        "wiki_page": "Nova Terra",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Orphea": {
+        "id": 58,
+        "slug": "orphea",
+        "name": "Orphea",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Nexus",
+        "wiki_page": "Orphea",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Probius": {
+        "id": 59,
+        "slug": "probius",
+        "name": "Probius",
+        "role_legacy": null,
+        "role": null,
+        "universe": "StarCraft",
+        "wiki_page": "Probius",
+        "prices": {
+            "gold": 7500,
+            "gems": 625
+        }
+    },
+    "Qhira": {
+        "id": 60,
+        "slug": "qhira",
+        "name": "Qhira",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Nexus",
+        "wiki_page": "Qhira",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Ragnaros": {
+        "id": 61,
+        "slug": "ragnaros",
+        "name": "Ragnaros",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Ragnaros",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Raynor": {
+        "id": 62,
+        "slug": "raynor",
+        "name": "Raynor",
+        "role_legacy": null,
+        "role": null,
+        "universe": "StarCraft",
+        "wiki_page": "Jim Raynor",
+        "prices": {
+            "gold": 2000,
+            "gems": 150
+        }
+    },
+    "Rehgar": {
+        "id": 63,
+        "slug": "rehgar",
+        "name": "Rehgar",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Rehgar Earthfury",
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Rexxar": {
+        "id": 64,
+        "slug": "rexxar",
+        "name": "Rexxar",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Rexxar",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Samuro": {
+        "id": 65,
+        "slug": "samuro",
+        "name": "Samuro",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Samuro",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Sgt. Hammer": {
+        "id": 66,
+        "slug": "sgt-hammer",
+        "name": "Sgt. Hammer",
+        "role_legacy": null,
+        "role": null,
+        "universe": "StarCraft",
+        "wiki_page": "Sgt. Hammer",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Sonya": {
+        "id": 67,
+        "slug": "sonya",
+        "name": "Sonya",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Sonya",
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Stitches": {
+        "id": 68,
+        "slug": "stitches",
+        "name": "Stitches",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Stitches",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Stukov": {
+        "id": 69,
+        "slug": "stukov",
+        "name": "Stukov",
+        "role_legacy": null,
+        "role": null,
+        "universe": "StarCraft",
+        "wiki_page": "Alexei Stukov",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Sylvanas": {
+        "id": 70,
+        "slug": "sylvanas",
+        "name": "Sylvanas",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Sylvanas Windrunner",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Tassadar": {
+        "id": 71,
+        "slug": "tassadar",
+        "name": "Tassadar",
+        "role_legacy": null,
+        "role": null,
+        "universe": "StarCraft",
+        "wiki_page": "Tassadar",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "The Butcher": {
+        "id": 72,
+        "slug": "the-butcher",
+        "name": "The Butcher",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "The Butcher",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "The Lost Vikings": {
+        "id": 73,
+        "slug": "the-lost-vikings",
+        "name": "The Lost Vikings",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Nexus",
+        "wiki_page": "The Lost Vikings",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Thrall": {
+        "id": 74,
+        "slug": "thrall",
+        "name": "Thrall",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Thrall",
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Tracer": {
+        "id": 75,
+        "slug": "tracer",
+        "name": "Tracer",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Overwatch",
+        "wiki_page": "Tracer",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Tychus": {
+        "id": 76,
+        "slug": "tychus",
+        "name": "Tychus",
+        "role_legacy": null,
+        "role": null,
+        "universe": "StarCraft",
+        "wiki_page": "Tychus Findlay",
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Tyrael": {
+        "id": 77,
+        "slug": "tyrael",
+        "name": "Tyrael",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Tyrael",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Tyrande": {
+        "id": 78,
+        "slug": "tyrande",
+        "name": "Tyrande",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Tyrande Whisperwind",
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Uther": {
+        "id": 79,
+        "slug": "uther",
+        "name": "Uther",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Uther the Lightbringer",
+        "prices": {
+            "gold": 2000,
+            "gems": 150
+        }
+    },
+    "Valeera": {
+        "id": 80,
+        "slug": "valeera",
+        "name": "Valeera",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Valeera Sanguinar",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Valla": {
+        "id": 81,
+        "slug": "valla",
+        "name": "Valla",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Valla",
+        "prices": {
+            "gold": 4000,
+            "gems": 500
+        }
+    },
+    "Varian": {
+        "id": 82,
+        "slug": "varian",
+        "name": "Varian",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Varian Wrynn",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Whitemane": {
+        "id": 83,
+        "slug": "whitemane",
+        "name": "Whitemane",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Sally Whitemane",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Xul": {
+        "id": 84,
+        "slug": "xul",
+        "name": "Xul",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Diablo",
+        "wiki_page": "Xul",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Yrel": {
+        "id": 85,
+        "slug": "yrel",
+        "name": "Yrel",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Yrel",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Zagara": {
+        "id": 86,
+        "slug": "zagara",
+        "name": "Zagara",
+        "role_legacy": null,
+        "role": null,
+        "universe": "StarCraft",
+        "wiki_page": "Zagara",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Zarya": {
+        "id": 87,
+        "slug": "zarya",
+        "name": "Zarya",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Overwatch",
+        "wiki_page": "Zarya",
+        "prices": {
+            "gold": 10000,
+            "gems": 750
+        }
+    },
+    "Zeratul": {
+        "id": 88,
+        "slug": "zeratul",
+        "name": "Zeratul",
+        "role_legacy": null,
+        "role": null,
+        "universe": "StarCraft",
+        "wiki_page": "Zeratul",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
+    },
+    "Zul'jin": {
+        "id": 89,
+        "slug": "zuljin",
+        "name": "Zul'jin",
+        "role_legacy": null,
+        "role": null,
+        "universe": "Warcraft",
+        "wiki_page": "Zul'jin",
+        "prices": {
+            "gold": 7000,
+            "gems": 625
+        }
     }
 }

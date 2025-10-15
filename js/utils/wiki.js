@@ -1,5 +1,3 @@
-// js/utils/wiki.js
-// All comments in English. Sections ordered alphabetically (A, B, C...).
 
 /* =========================================================
    A) TITLE NORMALIZATION (EXCEPTIONS)
