@@ -4,59 +4,73 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>HN — Detalles de Heroes</title>
-    <meta name="description" content="Website de Heroes de la Tormenta en español? " />
-    <meta name="author" content="Tu Nombre" />
+    <title>HN — Detalles de Héroe</title>
+    <meta name="description" content="Heroes of the Storm — Detalles del héroe" />
+    <meta name="author" content="Dart" />
+    <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/components/emblem-bar.css">
+    <link rel="stylesheet" href="../css/pages/heroes-details.css" />
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
     <link rel="shortcut icon" href="../assets/icons/favicon.ico">
     <link rel="manifest" href="../assets/icons/site.webmanifest">
+
     <link
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&family=Work+Sans:wght@400;600;700&display=swap"
         rel="stylesheet">
-
 </head>
 
 <body>
-
     <canvas id="stars" aria-hidden="true"></canvas>
 
-    <header id="site-header">    </header>
+    <header id="site-header"></header>
 
+    <main id="main-content" class="hero-details">
 
+                <div class="hero-banner" id="hero-banner">
+                    <video id="hero-video" autoplay muted loop playsinline></video>
+                    <img id="hero-image-fallback" alt="">
+                    <div class="hero-banner__overlay"></div>
+                    <section class="hero-head">
+                        <div class="hero-badges">
+                            <span id="badge-role" class="badge-icon" title="Rol"></span>
+                            <span id="badge-universe" class="badge-icon" title="Universo"></span>
+                        </div>
+                        <div class="hero-head__col">
+              
+                    
+                            <h1 class="hero-title" id="hero-name"></h1>
+                            <p class="hero-sub" id="hero-sub"></p>
+                    
+                            <div class="hero-meta">
+                                <span id="hero-role"></span>
+                                <span class="dot" aria-hidden="true"></span>
+                                <span id="hero-universe"></span>
+                                <span class="dot" aria-hidden="true"></span>
+                                <span id="hero-rarity"></span>
+                            </div>
+                    
+                            <div class="hero-prices" id="hero-prices"></div>
+                        </div>
+                    </section>
 
-<main id="main-content">
-    <div class="hero-banner" id="hero-banner">
-        <video id="hero-video" autoplay muted loop playsinline></video>
-        <img id="hero-image-fallback" alt="">
-    </div>
+                </div>
 
-    <header class="hero-head">
-        <h1 id="hero-name"></h1>
-        <p id="hero-sub"></p>
-        <div class="hero-meta">
-            <span id="hero-role"></span>
-            <span id="hero-universe"></span>
-            <span id="hero-rarity"></span>
-        </div>
-    </header>
-
-    <article class="hero-info">
-        <p id="hero-desc-text"></p>
-        <p id="hero-release"></p>
-        <div id="hero-prices"></div>
-    </article>
-</main>
-
-
+       
+        <!-- Texto / descripción -->
+        <article class="hero-info">
+            <h2 class="sr-only">Descripción</h2>
+            <p id="hero-desc-text"></p>
+            <p class="hero-release" id="hero-release"></p>
+        </article>
+    </main>
 
     <footer id="site-footer"></footer>
 
-<script type="module" src="../js/main.js"></script>
-<script type="module" src="../js/features/heroes-details.js"></script>
-
+    <script type="module" src="../js/main.js"></script>
+    <script type="module" src="../js/features/heroes-details.js"></script>
 </body>
 
 </html>
