@@ -128,7 +128,7 @@
             "video_mp4": null,
             "youtube_id": null
         },
-        "wiki_page": "Ana_(Overwatch)",
+        "wiki_page": "Ana",
         "rarity": null,
         "prices": {
             "gold": 7000,
@@ -161,7 +161,7 @@
             "video_mp4": null,
             "youtube_id": null
         },
-        "wiki_page": "Anduin_Wrynn_(Heroes_of_the_Storm)",
+        "wiki_page": "Anduin",
         "rarity": null,
         "prices": {
             "gold": 7000,
@@ -173,7 +173,7 @@
         "id": 6,
         "slug": "anubarak",
         "name": "Anubarak",
-        "alt_name": "Anubarak",
+        "alt_name": null,
         "role_legacy": "Warrior",
         "role": "Tank",
         "attack_type": "Melee",
@@ -196,7 +196,7 @@
             "video_mp4": null,
             "youtube_id": null
         },
-        "wiki_page": "Anubarak",
+        "wiki_page": "Anub'arak",
         "rarity": null,
         "prices": {
             "gold": 7000,
@@ -231,7 +231,7 @@
             "video_mp4": null,
             "youtube_id": null
         },
-        "wiki_page": "Artanis_(Heroes_of_the_Storm)",
+        "wiki_page": "Artanis",
         "rarity": null,
         "prices": {
             "gold": 7000,
@@ -275,4 +275,3 @@
         "tagline": null
     }
 }
- 

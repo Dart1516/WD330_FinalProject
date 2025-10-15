@@ -14,8 +14,8 @@ function resolveWikiTitle(hero) {
 async function fetchExtractEN(title) {
     const url =
         `https://heroesofthestorm.fandom.com/api.php` +
-        `?action=query&prop=extracts&exintro=1&explaintext=1&format=json&origin=*` +
-        `&titles=${encodeURIComponent(title)}`;
+        +   `?action=query&prop=extracts&exintro=1&explaintext=1&format=json&origin=*` +
+        +   `&redirects=1&titles=${encodeURIComponent(title)}`;
 
     try {
         const res = await fetch(url);
