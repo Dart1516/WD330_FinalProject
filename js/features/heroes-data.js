@@ -1,4 +1,4 @@
-// js/feature/heroes-data.js
+// js/features/heroes-data.js
 // All comments in English.
 
 /* =========================================================
@@ -29,10 +29,13 @@
    1) CONFIG
    - Toggle data source and repo-aware base path
    ========================================================= */
-const USE_LOCAL = true;                      // flip to false when wiring real API
+const USE_LOCAL = false;                     // try API first, then fallback to local JSON
 const REPO_NAME = 'WD330_FinalProject';      // GitHub Pages repository name
 const GH_BASE = location.hostname.endsWith('github.io') ? `/${REPO_NAME}` : '';
 const BASE_PATH = (typeof window !== 'undefined' && window.REPO_BASE) ? window.REPO_BASE : GH_BASE;
+
+// Netlify serverless proxy (token is added server-side)
+const API_PROXY = '/api/heroes';
 
 
 /* =========================================================
@@ -40,7 +43,6 @@ const BASE_PATH = (typeof window !== 'undefined' && window.REPO_BASE) ? window.R
    - URL join, input coercion, small utils
    ========================================================= */
 function joinPublic(path) {
-    // Ensure leading slash and prevent double slashes
     const p = path.startsWith('/') ? path : `/${path}`;
     return `${BASE_PATH}${p}`.replace(/\/{2,}/g, '/');
 }
@@ -66,7 +68,7 @@ function toArray(raw) {
 
 /* =========================================================
    3) FETCHERS
-   - Local JSON today, remote API tomorrow
+   - Local JSON and remote API
    ========================================================= */
 async function fetchLocalHeroes() {
     const url = joinPublic('/data/heroes.json');
@@ -77,13 +79,40 @@ async function fetchLocalHeroes() {
 }
 
 async function fetchApiHeroes() {
-    // Placeholder for future Heroes Profile API.
-    // Keep same output shape as normalizeHeroes().
-    // Example:
-    // const res = await fetch('https://api.heroesprofile.com/…', { headers: { 'x-api-key': '...' }});
-    // const raw = await res.json();
-    // return toArray(mapFromApi(raw));
-    throw new Error('Remote API not implemented yet');
+    // Call Netlify function (adds HP_TOKEN on the server)
+    const res = await fetch(`${API_PROXY}?mode=json`, { credentials: 'omit' });
+    if (!res.ok) throw new Error(`API error: ${res.status}`);
+    const raw = await res.json();
+    const list = toArray(raw);
+    return mapFromApi(list);
+}
+
+/** Map HeroesProfile /Heroes to our internal shape */
+function mapFromApi(list) {
+    return list.map((x) => {
+        const short =
+            x.short_name ||
+            (x.name ? x.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, '') : '');
+
+        return {
+            id: x.id,
+            slug: x.short_name || short,
+            name: x.name,
+            short_name: short,
+            alt_name: x.alt_name ?? null,
+            role: x.role,
+            new_role: x.new_role || x.role,
+            type: x.type ?? null,
+            release_date: x.release_date ?? null,
+            rework_date: x.rework_date ?? null,
+            attribute_id: x.attribute_id ?? null,
+            translations: x.translations ?? [],
+            // /Heroes does not include universe or portrait.
+            universe: 'Nexus',
+            portrait: `/assets/img/heroes/${short}.webp`,
+            description_short: '',
+        };
+    });
 }
 
 
@@ -117,8 +146,14 @@ function normalizeHeroes(list) {
    5) MAIN API
    ========================================================= */
 export async function getAllHeroes() {
-    const rawList = USE_LOCAL ? await fetchLocalHeroes() : await fetchApiHeroes();
-    return normalizeHeroes(rawList);
+    try {
+        const rawList = USE_LOCAL ? await fetchLocalHeroes() : await fetchApiHeroes();
+        return normalizeHeroes(rawList);
+    } catch (e) {
+        console.warn('[heroes-data] API failed, falling back to local JSON:', e);
+        const rawList = await fetchLocalHeroes();
+        return normalizeHeroes(rawList);
+    }
 }
 
 export const DataConfig = { USE_LOCAL, BASE_PATH, joinPublic };

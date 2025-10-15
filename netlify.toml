@@ -1,0 +1,9 @@
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Ruta bonita: /api/heroes → función
+[[redirects]]
+  from = "/api/heroes"
+  to = "/.netlify/functions/heroes"
+  status = 200
