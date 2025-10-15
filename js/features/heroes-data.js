@@ -3,44 +3,44 @@
 
 /* =========================================================
    0) PUBLIC SURFACE
-   - Exports: getAllHeroes(), DataConfig
    ========================================================= */
-
-/**
- * @typedef {Object} Hero
- * @property {string|number} id
- * @property {string} name
- * @property {string} short_name
- * @property {string} alt_name
- * @property {string} role
- * @property {string} new_role
- * @property {string} type
- * @property {string} release_date
- * @property {string|null} rework_date
- * @property {string|number} attribute_id
- * @property {Object} translations
- * @property {string} universe
- * @property {string} portrait
- * @property {string} description_short
+/** @typedef {Object} Hero
+ *  @property {string|number} id
+ *  @property {string} name
+ *  @property {string} short_name
+ *  @property {string} alt_name
+ *  @property {string} role
+ *  @property {string} new_role
+ *  @property {string} type
+ *  @property {string} release_date
+ *  @property {string|null} rework_date
+ *  @property {string|number} attribute_id
+ *  @property {Object} translations
+ *  @property {string} universe
+ *  @property {string} portrait
+ *  @property {string} description_short
  */
-
 
 /* =========================================================
    1) CONFIG
-   - Toggle data source and repo-aware base path
    ========================================================= */
-const USE_LOCAL = false;                     // try API first, then fallback to local JSON
-const REPO_NAME = 'WD330_FinalProject';      // GitHub Pages repository name
+const REPO_NAME = 'WD330_FinalProject';
 const GH_BASE = location.hostname.endsWith('github.io') ? `/${REPO_NAME}` : '';
 const BASE_PATH = (typeof window !== 'undefined' && window.REPO_BASE) ? window.REPO_BASE : GH_BASE;
 
-// Netlify serverless proxy (token is added server-side)
-const API_PROXY = '/api/heroes';
+// Detect environment:
+// - Netlify prod: *.netlify.app
+// - Netlify dev: localhost:8888 (default port)
+// In those cases we use the proxy (/api/heroes). Otherwise (e.g. 127.0.0.1:5501) use direct API with local token.
+const IS_NETLIFY =
+    location.hostname.endsWith('.netlify.app') ||
+    (location.hostname === 'localhost' && location.port === '8888');
 
+const API_PROXY = '/api/heroes';
+const API_DIRECT = 'https://api.heroesprofile.com/api/Heroes';
 
 /* =========================================================
    2) HELPERS
-   - URL join, input coercion, small utils
    ========================================================= */
 function joinPublic(path) {
     const p = path.startsWith('/') ? path : `/${path}`;
@@ -51,24 +51,20 @@ function ensureLeadingSlash(p) {
     return p.startsWith('/') ? p : `/${p.replace(/^(\.\/)?/, '')}`;
 }
 
-/** Coerce arbitrary JSON into an array of heroes */
 function toArray(raw) {
     if (Array.isArray(raw)) return raw;
     if (raw && Array.isArray(raw.heroes)) return raw.heroes;
     if (raw && Array.isArray(raw.data)) return raw.data;
-
     if (raw && typeof raw === 'object') {
         const vals = Object.values(raw);
-        if (vals.length === 0) return [];
+        if (!vals.length) return [];
         return Array.isArray(vals[0]) ? vals.flat() : vals;
     }
     return [];
 }
 
-
 /* =========================================================
    3) FETCHERS
-   - Local JSON and remote API
    ========================================================= */
 async function fetchLocalHeroes() {
     const url = joinPublic('/data/heroes.json');
@@ -79,12 +75,26 @@ async function fetchLocalHeroes() {
 }
 
 async function fetchApiHeroes() {
-    // Call Netlify function (adds HP_TOKEN on the server)
-    const res = await fetch(`${API_PROXY}?mode=json`, { credentials: 'omit' });
-    if (!res.ok) throw new Error(`API error: ${res.status}`);
+    // Netlify env → use proxy (token stays server-side)
+    if (IS_NETLIFY) {
+        const res = await fetch(`${API_PROXY}?mode=json`, { credentials: 'omit' });
+        if (!res.ok) throw new Error(`API error (proxy): ${res.status}`);
+        const raw = await res.json();
+        return mapFromApi(toArray(raw));
+    }
+
+    // Local dev (e.g., Live Server): use direct API with local token
+    const token =
+        (window.HP && window.HP.API_TOKEN) ||
+        localStorage.getItem('HP_API_TOKEN') ||
+        '';
+    if (!token) throw new Error('Missing API token for local dev. Create js/config.local.js');
+
+    const url = `${API_DIRECT}?mode=json&api_token=${encodeURIComponent(token)}`;
+    const res = await fetch(url, { credentials: 'omit' });
+    if (!res.ok) throw new Error(`API error (direct): ${res.status}`);
     const raw = await res.json();
-    const list = toArray(raw);
-    return mapFromApi(list);
+    return mapFromApi(toArray(raw));
 }
 
 /** Map HeroesProfile /Heroes to our internal shape */
@@ -107,18 +117,15 @@ function mapFromApi(list) {
             rework_date: x.rework_date ?? null,
             attribute_id: x.attribute_id ?? null,
             translations: x.translations ?? [],
-            // /Heroes does not include universe or portrait.
-            universe: 'Nexus',
-            portrait: `/assets/img/heroes/${short}.webp`,
+            universe: 'Nexus',                         // not provided by /Heroes
+            
             description_short: '',
         };
     });
 }
 
-
 /* =========================================================
    4) NORMALIZER
-   - Unify fields and fix portrait paths
    ========================================================= */
 function normalizeHeroes(list) {
     return list.map((h) => {
@@ -141,13 +148,12 @@ function normalizeHeroes(list) {
     });
 }
 
-
 /* =========================================================
    5) MAIN API
    ========================================================= */
 export async function getAllHeroes() {
     try {
-        const rawList = USE_LOCAL ? await fetchLocalHeroes() : await fetchApiHeroes();
+        const rawList = await fetchApiHeroes();
         return normalizeHeroes(rawList);
     } catch (e) {
         console.warn('[heroes-data] API failed, falling back to local JSON:', e);
@@ -156,4 +162,4 @@ export async function getAllHeroes() {
     }
 }
 
-export const DataConfig = { USE_LOCAL, BASE_PATH, joinPublic };
+export const DataConfig = { BASE_PATH, joinPublic };

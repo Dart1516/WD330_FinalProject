@@ -1,10 +1,15 @@
 // js/features/heroes-list.js
-// All comments in English.
+// All comments in English. Sections ordered alphabetically (A, B, C...).
 
 import { getAllHeroes, DataConfig } from './heroes-data.js';
+import {
+    getOriginalImagesForTitles,
+    getThumbnailsForTitles,
+    normalizeWikiTitle,
+} from '../utils/wiki.js';
 
 /* =========================================================
-   1) DOM & STATE
+   A) CONSTANTS & MAPPINGS
    ========================================================= */
 const $ = {
     grid: document.getElementById('grid'),
@@ -19,81 +24,81 @@ const $ = {
     emblemBar: document.getElementById('emblem-bar'),
 };
 
-const state = {
-    all: /** @type {import('./heroes-data.js').Hero[]} */([]),
-    list: [],
-    roles: new Set(),      // OR within group
-    universes: new Set(),  // OR within group
-    text: '',              // AND with groups
+const ROLE_BY_CLASS = {
+    'role-ass-melee': 'Melee Assassin',
+    'role-ass-range': 'Ranged Assassin',
+    'role-healer': 'Healer',
+    'role-support': 'Support',
+    'role-tank': 'Tank',
+    'role-warrior': 'Bruiser',
+};
+
+const ROLE_CLASS_BY_TOKEN = {
+    'Bruiser': 'role-warrior',
+    'Healer': 'role-healer',
+    'Melee Assassin': 'role-ass-melee',
+    'Ranged Assassin': 'role-ass-range',
+    'Support': 'role-support',
+    'Tank': 'role-tank',
+};
+
+const UNI_CLASS_BY_TOKEN = {
+    'Diablo': 'uni-diablo',
+    'Nexus': 'uni-nexus',
+    'Overwatch': 'uni-overwatch',
+    'StarCraft': 'uni-starcraft',
+    'Warcraft': 'uni-warcraft',
+};
+
+const UNIVERSE_BY_CLASS = {
+    'uni-diablo': 'Diablo',
+    'uni-nexus': 'Nexus',
+    'uni-overwatch': 'Overwatch',
+    'uni-starcraft': 'StarCraft',
+    'uni-warcraft': 'Warcraft',
 };
 
 const IS_TOUCH = matchMedia('(hover: none)').matches;
 
+const state = {
+    all: /** @type {import('./heroes-data.js').Hero[]} */([]),
+    list: [],
+    roles: new Set(),
+    universes: new Set(),
+    text: '',
+};
+
 /* =========================================================
-   2) START
+   B) BOOT / STARTUP
    ========================================================= */
 boot().catch(showError);
 
 async function boot() {
     renderSkeletons(8);
-    bindFilterChips();   // now reads from #emblem-bar .emblem
+    bindFilterChips();
     bindSearch();
     bindClear();
     bindSheet();
 
     try {
+        // Load local heroes (or LocalFirst per your data layer)
         state.all = await getAllHeroes();
-    } catch (e) {
-        showError(e);
+
+        // Hydrate heroes with Fandom images (original -> thumbnail fallback)
+        await hydrateImagesFromFandom(state.all);
+    } catch (err) {
+        showError(err);
         return;
     }
+
     applyFilters();
     updateCount(state.list.length);
 }
 
 /* =========================================================
-   3) EVENTS
+   C) BINDINGS: FILTERS & SEARCH
    ========================================================= */
-// Clase CSS del <li.emblem>  ->  token usado por los datos
-const ROLE_BY_CLASS = {
-    'role-tank': 'Tank',
-    'role-warrior': 'Bruiser',
-    'role-ass-melee': 'Melee Assassin',
-    'role-ass-range': 'Ranged Assassin',
-    'role-healer': 'Healer',
-    'role-support': 'Support',
-};
-
-const UNIVERSE_BY_CLASS = {
-    'uni-warcraft': 'Warcraft',
-    'uni-starcraft': 'StarCraft',
-    'uni-diablo': 'Diablo',
-    'uni-overwatch': 'Overwatch',
-    'uni-nexus': 'Nexus',
-};
-
-// Token de datos  ->  clase CSS para el badge
-const ROLE_CLASS_BY_TOKEN = {
-    'Tank': 'role-tank',
-    'Bruiser': 'role-warrior',
-    'Melee Assassin': 'role-ass-melee',
-    'Ranged Assassin': 'role-ass-range',
-    'Healer': 'role-healer',
-    'Support': 'role-support',
-};
-
-const UNI_CLASS_BY_TOKEN = {
-    'Warcraft': 'uni-warcraft',
-    'StarCraft': 'uni-starcraft',
-    'Diablo': 'uni-diablo',
-    'Overwatch': 'uni-overwatch',
-    'Nexus': 'uni-nexus',
-};
-
-
-
 function bindFilterChips() {
-    // Switch from button.icon-chip to #emblem-bar .emblem with event delegation
     if (!$.emblemBar) return;
 
     const handleToggle = (item) => {
@@ -105,7 +110,6 @@ function bindFilterChips() {
         if (roleToken) toggle(item, state.roles, roleToken);
         if (uniToken) toggle(item, state.universes, uniToken);
 
-        // Sync visual class with aria-pressed
         const pressed = item.getAttribute('aria-pressed') === 'true';
         item.classList.toggle('active', pressed);
 
@@ -125,20 +129,6 @@ function bindFilterChips() {
         e.preventDefault();
         handleToggle(item);
     });
-}
-
-function getRoleToken(el) {
-    for (const cls of el.classList) {
-        if (ROLE_BY_CLASS[cls]) return ROLE_BY_CLASS[cls];
-    }
-    return null;
-}
-
-function getUniverseToken(el) {
-    for (const cls of el.classList) {
-        if (UNIVERSE_BY_CLASS[cls]) return UNIVERSE_BY_CLASS[cls];
-    }
-    return null;
 }
 
 function bindSearch() {
@@ -161,7 +151,6 @@ function bindClear() {
         state.text = '';
         if ($.search) $.search.value = '';
 
-        // Clear emblem selections (instead of old .icon-chip)
         if ($.emblemBar) {
             $.emblemBar.querySelectorAll('.emblem').forEach((el) => {
                 el.setAttribute('aria-pressed', 'false');
@@ -173,8 +162,52 @@ function bindClear() {
     });
 }
 
+/* =========================================================
+   D) FILTERS: APPLY & HELPERS
+   ========================================================= */
+function applyFilters() {
+    const q = state.text.toLowerCase();
+
+    state.list = state.all.filter((h) => {
+        // Text search
+        if (q) {
+            const hay = `${h.name} ${h.alt_name ?? ''} ${h.short_name ?? ''}`.toLowerCase();
+            if (!hay.includes(q)) return false;
+        }
+        // Roles (OR). If hero role is "Assassin", accept Melee/Ranged Assassin selections as well.
+        if (state.roles.size) {
+            const heroRole = h.new_role || h.role;
+            const roleOk =
+                state.roles.has(heroRole) ||
+                (heroRole === 'Assassin' &&
+                    (state.roles.has('Melee Assassin') || state.roles.has('Ranged Assassin')));
+            if (!roleOk) return false;
+        }
+        // Universe (OR)
+        if (state.universes.size && !state.universes.has(h.universe)) return false;
+        return true;
+    });
+
+    renderGrid(state.list);
+    renderActiveChips();
+    updateCount(state.list.length);
+}
+
+function getRoleToken(el) {
+    for (const cls of el.classList) {
+        if (ROLE_BY_CLASS[cls]) return ROLE_BY_CLASS[cls];
+    }
+    return null;
+}
+
+function getUniverseToken(el) {
+    for (const cls of el.classList) {
+        if (UNIVERSE_BY_CLASS[cls]) return UNIVERSE_BY_CLASS[cls];
+    }
+    return null;
+}
+
 function toggle(btn, set, value) {
-    // Keeps same API but now works with <li.emblem>
     if (set.has(value)) {
         set.delete(value);
         btn.setAttribute('aria-pressed', 'false');
@@ -185,35 +218,8 @@ function toggle(btn, set, value) {
 }
 
 /* =========================================================
-   4) FILTER + RENDER
+   E) GRID RENDER
    ========================================================= */
-function applyFilters() {
-    const q = state.text.toLowerCase();
-
-    state.list = state.all.filter((h) => {
-        // text
-        if (q) {
-            const hay = `${h.name} ${h.alt_name ?? ''} ${h.short_name ?? ''}`.toLowerCase();
-            if (!hay.includes(q)) return false;
-        }
-        // roles (OR). If hero role is "Assassin", accept if user selected Melee or Ranged.
-        if (state.roles.size) {
-            const heroRole = h.new_role || h.role;
-            const roleOk =
-                state.roles.has(heroRole) ||
-                (heroRole === 'Assassin' && (state.roles.has('Melee Assassin') || state.roles.has('Ranged Assassin')));
-            if (!roleOk) return false;
-        }
-        // universe (OR)
-        if (state.universes.size && !state.universes.has(h.universe)) return false;
-        return true;
-    });
-
-    renderGrid(state.list);
-    renderActiveChips();
-    updateCount(state.list.length);
-}
-
 function renderGrid(items) {
     $.grid.setAttribute('aria-busy', 'false');
     $.grid.innerHTML = '';
@@ -234,16 +240,28 @@ function renderGrid(items) {
         card.dataset.role = hero.new_role || hero.role;
         card.dataset.slug = hero.slug || hero.short_name || (hero.name ?? '').toLowerCase();
 
+        // --- Image choice: Fandom original/thumbnail -> local portrait -> placeholder
         const img = document.createElement('img');
         img.alt = '';
         img.loading = 'lazy';
         img.decoding = 'async';
-        img.src = hero.portrait;
-        img.srcset = `${hero.portrait} 1x`;
+
+        const localPortrait =
+            hero.portrait ||
+            hero.images?.portrait ||
+            `/assets/img/heroes/${hero.slug}.webp`;
+
+        const chosen = hero.fandom_image || localPortrait;
+
+        img.src = chosen;
+        img.srcset = `${chosen} 1x`;
         img.sizes = '(max-width: 720px) 50vw, 25vw';
+        img.onerror = () => { img.src = '/assets/img/heroes/placeholder.webp'; };
+
         card.append(img);
 
-        const go = () => goToDetails(hero);  // 👈 ahora pasamos el objeto completo
+        // --- Events
+        const go = () => goToDetails(hero);
 
         if (IS_TOUCH) {
             card.addEventListener('click', go);
@@ -264,7 +282,6 @@ function renderGrid(items) {
     $.grid.append(frag);
 }
 
-
 function renderSkeletons(n) {
     $.grid.setAttribute('aria-busy', 'true');
     $.grid.innerHTML = '';
@@ -275,9 +292,9 @@ function renderSkeletons(n) {
 function renderActiveChips() {
     if (!$.chipsWrap) return;
     const chips = [];
-    if (state.text) chips.push(`Texto: “${state.text}”`);
-    if (state.roles.size) chips.push(...[...state.roles].map(r => `Rol: ${r}`));
-    if (state.universes.size) chips.push(...[...state.universes].map(u => `Universo: ${u}`));
+    if (state.text) chips.push(`Text: “${state.text}”`);
+    if (state.roles.size) chips.push(...[...state.roles].map(r => `Role: ${r}`));
+    if (state.universes.size) chips.push(...[...state.universes].map(u => `Universe: ${u}`));
     $.chipsWrap.innerHTML = chips.map(t => `<span class="chip">${t}</span>`).join('');
 }
 
@@ -285,14 +302,8 @@ function updateCount(n) {
     if ($.count) $.count.textContent = String(n);
 }
 
-function showError(err) {
-    console.error(err);
-    $.grid.innerHTML = '';
-    if ($.tplError) $.grid.append($.tplError.content.cloneNode(true));
-}
-
 /* =========================================================
-   5) NAV
+   F) NAVIGATION
    ========================================================= */
 function goToDetails(hero) {
     const slug = hero.slug || hero.short_name || String(hero.id);
@@ -300,9 +311,8 @@ function goToDetails(hero) {
     window.location.assign(url);
 }
 
-
 /* =========================================================
-   6) DESKTOP POPOVER
+   G) POPOVER (DESKTOP)
    ========================================================= */
 function attachPopover(card, hero) {
     let timer = 0;
@@ -364,7 +374,7 @@ function placePopover(pop, card) {
 }
 
 /* =========================================================
-   7) MOBILE SHEET
+   H) SHEET (MOBILE)
    ========================================================= */
 function bindSheet() {
     if (!$.sheet) return;
@@ -374,10 +384,8 @@ function bindSheet() {
     document.addEventListener('keydown', (e) => e.key === 'Escape' && close());
 }
 
- 
-
 /* =========================================================
-   8) ICONS & UTILS
+   I) UTILS (ICONS & ESCAPERS)
    ========================================================= */
 function iconRole(role) {
     const cls = ROLE_CLASS_BY_TOKEN[role] || 'role-ass-melee';
@@ -389,7 +397,6 @@ function iconUniverse(u) {
     return `<span class="badge ${cls}" aria-hidden="true"></span>`;
 }
 
-
 function escapeHTML(s) {
     return String(s)
         .replaceAll('&', '&amp;')
@@ -397,4 +404,29 @@ function escapeHTML(s) {
         .replaceAll('>', '&gt;')
         .replaceAll('"', '&quot;')
         .replaceAll("'", '&#039;');
+}
+
+/* =========================================================
+   J) WIKI: FANDOM IMAGES HYDRATION
+   ========================================================= */
+async function hydrateImagesFromFandom(list) {
+    const titles = list
+        .map(h => normalizeWikiTitle(h.wiki_page || h.name))
+        .filter(Boolean);
+
+    // 1) Try originals (large)
+    const originals = await getOriginalImagesForTitles(titles);
+
+    // 2) Missing originals -> try thumbnails
+    const missing = titles.filter(t => !originals[t]);
+    let thumbs = {};
+    if (missing.length) {
+        thumbs = await getThumbnailsForTitles(missing, 480);
+    }
+
+    // 3) Attach to hero objects (as `fandom_image`)
+    for (const hero of list) {
+        const t = normalizeWikiTitle(hero.wiki_page || hero.name);
+        hero.fandom_image = originals[t] || thumbs[t] || '';
+    }
 }
