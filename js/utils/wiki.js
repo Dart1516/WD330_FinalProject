@@ -12,23 +12,30 @@ function resolveWikiTitle(hero) {
 }
 
 async function fetchExtractEN(title) {
-    const url =
-        `https://heroesofthestorm.fandom.com/api.php` +
-        +   `?action=query&prop=extracts&exintro=1&explaintext=1&format=json&origin=*` +
-        +   `&redirects=1&titles=${encodeURIComponent(title)}`;
+    const params = new URLSearchParams({
+        action: 'query',
+        prop: 'extracts',
+        exintro: '1',
+        explaintext: '1',
+        format: 'json',
+        origin: '*',
+        redirects: '1',
+        titles: title,
+    });
+    const url = `https://heroesofthestorm.fandom.com/api.php?${params}`;
 
     try {
         const res = await fetch(url);
         if (!res.ok) return '';
         const data = await res.json();
         const pages = data?.query?.pages || {};
-        const firstKey = Object.keys(pages)[0];
-        const extract = firstKey ? (pages[firstKey]?.extract || '') : '';
-        return (extract || '').trim();
+        const first = Object.values(pages)[0];
+        return (first?.extract || '').trim();
     } catch {
         return '';
     }
 }
+
 
 export async function getHeroDescription(hero, { translateToEs = false } = {}) {
     const title = resolveWikiTitle(hero);
