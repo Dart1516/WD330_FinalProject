@@ -36,22 +36,28 @@
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&family=Work+Sans:wght@400;600;700&display=swap"
         rel="stylesheet">
 
-         <script src="/js/config.prod.js"></script>
-  <script>
+
+<script src="/js/config.prod.js"></script>
+
+
+<script>
     (function () {
-      const path = '/js/config.local.js';
-      fetch(path, { method: 'HEAD' })
-        .then(r => {
-          if (r.ok) {
+        const isLocal =
+            location.hostname === 'localhost' ||
+            location.hostname === '127.0.0.1' ||
+            // útil si corres con puertos distintos
+            /^localhost:\d+$/.test(location.host) ||
+            /^127\.0\.0\.1:\d+$/.test(location.host);
+
+        if (isLocal) {
             const s = document.createElement('script');
-            s.src = path;
+            s.src = '/js/config.local.js';
             document.head.appendChild(s);
-          }
-        })
-        .catch(() => {});
+        }
     })();
-  </script>
-  
+</script>
+
+
 </head>
 
 <body>
