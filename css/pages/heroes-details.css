@@ -25,6 +25,7 @@
     height: 100%;
     object-fit: cover;
     z-index: 0;
+    object-position: 75% center;
 }
 
 /* Overlay MUY sutil para dar legibilidad a la izquierda */
